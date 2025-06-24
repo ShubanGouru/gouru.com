@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Gouru</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+    }
+    .container {
+      position: relative;
+      height: 100%;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .title {
+      display: flex;
+      font-weight: bold;
+      font-size: min(80vh, 18vw);
+      line-height: 1;
+    }
+    .letter {
+      transform: translateY(-100vh);
+      animation: drop 1s forwards;
+    }
+    .letter:nth-child(1) { animation-delay: 0s; }
+    .letter:nth-child(2) { animation-delay: 0.1s; }
+    .letter:nth-child(3) { animation-delay: 0.2s; }
+    .letter:nth-child(4) { animation-delay: 0.3s; }
+    .letter:nth-child(5) { animation-delay: 0.4s; }
+    @keyframes drop {
+      to { transform: translateY(0); }
+    }
+    .subtitle {
+      font-size: 1.2rem;
+    }
+    .copyright {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      font-size: 0.8rem;
+      padding: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="title">
+      <span class="letter">G</span>
+      <span class="letter">o</span>
+      <span class="letter">u</span>
+      <span class="letter">r</span>
+      <span class="letter">u</span>
+    </div>
+    <div class="subtitle">Website under construction.</div>
+  </div>
+  <div class="copyright">&copy; 2025 Gouru. All Rights Reserved.</div>
+</body>
+</html>
