@@ -21,9 +21,10 @@
       justify-content: center;
     }
     .title {
+      /* Ensure text fits within viewport */
       display: flex;
       font-weight: bold;
-      font-size: 80vh;
+      font-size: min(80vh, 18vw);
       line-height: 1;
     }
     .letter {
