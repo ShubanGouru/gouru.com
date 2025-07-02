@@ -184,16 +184,6 @@ nav {
       border-radius: 0;
     }
 
-    .expand-section.hold {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100vh;
-      margin: 0;
-      border-radius: 0;
-      z-index: 1001;
-    }
 
 @media (max-width: 600px) {
   .nav-links {
@@ -348,20 +338,12 @@ nav {
     const expandWrapper = document.querySelector('.expand-wrapper');
     const expandSection = document.querySelector('.expand-section');
 
-    let holdTimeout;
     function checkExpand() {
       const rect = expandWrapper.getBoundingClientRect();
-      if (rect.top <= 0 && rect.bottom >= window.innerHeight) {
-        clearTimeout(holdTimeout);
+      if (rect.top < window.innerHeight && rect.bottom > 0) {
         expandSection.classList.add('full');
       } else {
-        if (expandSection.classList.contains('full') && !expandSection.classList.contains('hold')) {
-          expandSection.classList.add('hold');
-          holdTimeout = setTimeout(() => {
-            expandSection.classList.remove('full');
-            expandSection.classList.remove('hold');
-          }, 1000);
-        }
+        expandSection.classList.remove('full');
       }
     }
 
