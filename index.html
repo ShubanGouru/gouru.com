@@ -167,6 +167,23 @@
     display: flex;
     align-items: center;
   }
+  .nav-right {
+    position: relative;
+    cursor: pointer;
+    border: none;
+    color: var(--color-primary);
+    overflow: hidden;
+  }
+  .nav-right::before {
+    content: "";
+    position: absolute;
+    inset: -4px;
+    border-radius: inherit;
+    background: conic-gradient(red, orange, yellow, green, blue, indigo, violet, red);
+    animation: spin 4s linear infinite;
+    z-index: -1;
+    filter: blur(6px);
+  }
 .nav-links a {
   text-decoration: none;
   color: var(--color-primary);
@@ -175,14 +192,6 @@
 }
 .nav-links a:hover {
   color: var(--color-secondary);
-}
-.join-btn {
-  padding: 6px 14px;
-  border: none;
-  border-radius: 999px;
-  background: var(--color-secondary);
-  color: var(--color-surface);
-  cursor: pointer;
 }
 .hamburger,
 .close-btn {
@@ -247,7 +256,7 @@
     position: absolute;
     right: 20px;
   }
-  .join-btn {
+  .nav-right {
     position: absolute;
     right: 60px;
   }
@@ -288,16 +297,20 @@
   margin: 0;
   padding: 0;
 }
-.footer-section li {
-  margin-bottom: 6px;
-}
-.site-footer a {
-  color: var(--color-secondary);
-  text-decoration: none;
-}
-.site-footer a:hover {
-  color: var(--color-primary);
-}
+  .footer-section li {
+    margin-bottom: 6px;
+  }
+  .site-footer a {
+    color: var(--color-secondary);
+    text-decoration: none;
+  }
+  .site-footer a:hover {
+    color: var(--color-primary);
+  }
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
   .footer-bottom {
     text-align: center;
     margin-top: 30px;
@@ -319,9 +332,7 @@
       <li><a href="#">Capital Investments</a></li>
       <li><a href="#">Org</a></li>
     </ul>
-    <div class="nav-right">
-      <button class="join-btn">Join Us</button>
-    </div>
+    <button class="nav-right">Join Us</button>
   </nav>
   <div id="hero" class="hero">
     <iframe src="https://www.youtube.com/embed/_HVATY4rdGw?autoplay=1&amp;mute=1&amp;controls=0&amp;loop=1&amp;playlist=_HVATY4rdGw" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
