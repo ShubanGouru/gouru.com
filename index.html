@@ -281,12 +281,32 @@
 }
 .footer-left {
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
   gap: 10px;
   font-weight: bold;
 }
+.logo-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
 .footer-logo-text {
   font-size: 2rem;
+}
+.footer-divider {
+  width: 100%;
+  border: none;
+  border-top: 1px solid rgba(0,0,0,0.2);
+  margin: 0;
+}
+.social-icons {
+  display: flex;
+  gap: 8px;
+}
+.social-icons img {
+  height: 24px;
+  width: 24px;
 }
 .footer-section h3 {
   margin: 0 0 10px 0;
@@ -353,28 +373,44 @@
   <footer class="site-footer">
     <div class="footer-top">
       <div class="footer-left">
-        <img src="logos/gouru_logo_png-favicon.png" alt="Gouru logo" class="logo-img" />
-        <span class="footer-logo-text">Gouru</span>
+        <div class="logo-group">
+          <img src="logos/gouru_logo_png-favicon.png" alt="Gouru logo" class="logo-img" />
+          <span class="footer-logo-text">Gouru</span>
+        </div>
+        <hr class="footer-divider" />
+        <div class="social-icons">
+          <a href="#"><img src="logos/linkedin.svg" alt="LinkedIn" /></a>
+          <a href="#"><img src="logos/instagram.svg" alt="Instagram" /></a>
+          <a href="#"><img src="logos/facebook.svg" alt="Facebook" /></a>
+        </div>
       </div>
       <div class="footer-section">
-        <h3>Past Works</h3>
+        <h3>Investors</h3>
         <ul>
-          <li><a href="#">Project One</a></li>
-          <li><a href="#">Project Two</a></li>
+          <li><a href="#">Investment Process</a></li>
+          <li><a href="#">Offerings</a></li>
+          <li><a href="#">Our Portfolio</a></li>
         </ul>
       </div>
       <div class="footer-section">
-        <h3>Policies</h3>
+        <h3>Sellers</h3>
         <ul>
-          <li><a href="#">Ethics Policies</a></li>
-          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Selling Process</a></li>
         </ul>
       </div>
       <div class="footer-section">
-        <h3>Reporting</h3>
+        <h3>About Us</h3>
+        <ul>
+          <li><a href="#">Our Team</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Contact Us</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>News and Reporting</h3>
         <ul>
           <li><a href="#">Brand Kit</a></li>
-          <li><a href="#">News &amp; Media</a></li>
+          <li><a href="#">News</a></li>
         </ul>
       </div>
     </div>
