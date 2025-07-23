@@ -91,6 +91,7 @@
       height: 60vh;
       border-radius: 30px;
     }
+/*
     .hero iframe {
       position: absolute;
       top: 0;
@@ -99,6 +100,7 @@
       height: 100vh;
       pointer-events: none;
     }
+*/
     .hero-text {
       position: absolute;
       bottom: 20px;
@@ -156,34 +158,37 @@
     border-radius: 999px;
   }
 
-  .nav-left,
-  .nav-right {
-    background: rgba(255, 255, 255, 0.4);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    border-radius: 999px;
-    padding: 6px 14px;
-    display: flex;
-    align-items: center;
-  }
-  .nav-right {
-    position: relative;
-    cursor: pointer;
-    border: none;
-    color: var(--color-primary);
-    overflow: hidden;
-  }
-  .nav-right::before {
-    content: "";
-    position: absolute;
-    inset: -4px;
-    border-radius: inherit;
-    background: conic-gradient(red, orange, yellow, green, blue, indigo, violet, red);
-    animation: spin 4s linear infinite;
-    z-index: -1;
-    filter: blur(6px);
-  }
+    .nav-left,
+    .nav-right {
+      background: rgba(255, 255, 255, 0.4);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-radius: 999px;
+      padding: 0 14px;
+      display: flex;
+      align-items: center;
+      height: 40px;
+    }
+    .nav-right {
+      position: relative;
+      cursor: pointer;
+      color: var(--color-primary);
+      border: 2px solid transparent;
+      overflow: hidden;
+    }
+    .nav-right::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      padding: 2px;
+      background: conic-gradient(red, orange, yellow, green, blue, indigo, violet, red);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      animation: spin 4s linear infinite;
+      pointer-events: none;
+    }
 .nav-links a {
   text-decoration: none;
   color: var(--color-primary);
@@ -319,23 +324,53 @@
     border-top: 1px solid rgba(0,0,0,0.1);
     color: var(--color-neutral-dark);
   }
+  .popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+  }
+  .popup-content {
+    background: #fff;
+    padding: 20px 30px;
+    border-radius: 10px;
+    position: relative;
+    text-align: center;
+  }
+  .popup-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+  }
   </style>
 </head>
 <body>
   <nav>
-    <div class="logo"><img src="logos/gouru_logo_png-favicon.png" alt="Gouru logo" class="logo-img"> <span>Gouru</span>
+    <div class="logo"><img src="logos/gouru_logo_no_bg.png" alt="Gouru logo" class="logo-img"> <span>Gouru</span>
     </div>
     <button class="hamburger">&#9776;</button>
     <ul class="nav-links">
       <li class="close-btn">&times;</li>
-      <li><a href="https://pitchlabs.org" target="_blank" rel="noopener noreferrer">Pitch Labs</a></li>
-      <li><a href="#">Capital Investments</a></li>
-      <li><a href="#">Org</a></li>
+        <li class="who-text">Who are you?</li>
+        <li><a href="#">Seller</a></li>
+        <li><a href="#">Investor</a></li>
+        <li><a href="#">Portfolio</a></li>
+        <li><a href="#">About Us</a></li>
     </ul>
-    <button class="nav-right">Join Us</button>
+    <button class="nav-right" id="investor-portal-btn">Investor Portal</button>
   </nav>
   <div id="hero" class="hero">
-    <iframe src="https://www.youtube.com/embed/_HVATY4rdGw?autoplay=1&amp;mute=1&amp;controls=0&amp;loop=1&amp;playlist=_HVATY4rdGw" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+<!--    <iframe src="https://www.youtube.com/embed/_HVATY4rdGw?autoplay=1&amp;mute=1&amp;controls=0&amp;loop=1&amp;playlist=_HVATY4rdGw" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>-->
     <div class="hero-text">
       <p>Innovate.</p>
       <p>Create.</p>
@@ -349,11 +384,17 @@
       <p style="padding:20px">This section grows to fill the screen as you scroll over it and returns to its rounded shape once you scroll past.</p>
     </div>
   </div>
+  <div id="investor-portal-popup" class="popup">
+    <div class="popup-content">
+      <button class="popup-close">&times;</button>
+      <p>Investor Portal will be launched soon</p>
+    </div>
+  </div>
 
   <footer class="site-footer">
     <div class="footer-top">
       <div class="footer-left">
-        <img src="logos/gouru_logo_png-favicon.png" alt="Gouru logo" class="logo-img" />
+        <img src="logos/gouru_logo_no_bg.png" alt="Gouru logo" class="logo-img" />
         <span class="footer-logo-text">Gouru</span>
       </div>
       <div class="footer-section">
@@ -416,6 +457,16 @@
     });
     closeBtn.addEventListener('click', () => {
       navLinks.classList.remove('open');
+    });
+
+    const portalBtn = document.getElementById("investor-portal-btn");
+    const portalPopup = document.getElementById("investor-portal-popup");
+    const popupClose = document.querySelector(".popup-close");
+    portalBtn.addEventListener("click", () => {
+      portalPopup.style.display = "flex";
+    });
+    popupClose.addEventListener("click", () => {
+      portalPopup.style.display = "none";
     });
 
     document.addEventListener('scroll', () => {
