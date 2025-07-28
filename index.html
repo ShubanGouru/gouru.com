@@ -250,30 +250,64 @@
   border: none;
 }
 
-    /* expanding section styles */
-    .expand-wrapper {
-      height: 200vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0 20px;
-    }
-    .expand-section {
-      width: 100%;
-      height: 80vh;
-      background: var(--color-neutral-light);
-      border-radius: 30px;
-      margin: 0;
-      transition: all 0.5s ease;
-      overflow: hidden;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-    }
-    .expand-section.full {
-      width: 100%;
-      height: 100vh;
-      margin: 0;
-      border-radius: 0;
-    }
+  /* scroll snap sections */
+  html {
+    scroll-snap-type: y mandatory;
+  }
+  .snap-section {
+    scroll-snap-align: center;
+    height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .mission-section {
+    background: var(--color-surface);
+  }
+  .mission-content {
+    max-width: 600px;
+    text-align: center;
+    font-size: 1.5rem;
+  }
+  .gold {
+    color: var(--color-support);
+  }
+  .investor-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    max-width: 800px;
+  }
+  .investor-card {
+    background: var(--color-neutral-light);
+    padding: 20px;
+    border-radius: 10px;
+    opacity: 0;
+    transform: translateX(100px);
+    transition: transform 0.6s ease-out, opacity 0.6s ease-out;
+  }
+  .investor-card.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  .sellers-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    max-width: 800px;
+  }
+  .seller-img {
+    max-height: 40vh;
+    width: auto;
+    border-radius: 10px;
+  }
+  .testimonials blockquote {
+    font-style: italic;
+    margin: 10px 0;
+  }
 
 
 @media (max-width: 600px) {
@@ -326,6 +360,8 @@
   flex-wrap: wrap;
   justify-content: space-between;
   gap: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 .footer-left {
   display: flex;
@@ -353,8 +389,8 @@
   gap: 8px;
 }
 .social-icons img {
-  height: 24px;
-  width: 24px;
+  height: 32px;
+  width: 32px;
 }
 .footer-section h3 {
   margin: 0 0 10px 0;
@@ -386,6 +422,9 @@
     font-size: 0.8rem;
     border-top: 1px solid rgba(0,0,0,0.1);
     color: var(--color-neutral-dark);
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
   }
   .popup {
     position: fixed;
@@ -503,12 +542,41 @@
     </div>
   </div>
 
-  <div class="expand-wrapper">
-    <div class="expand-section">
-      <h2 style="padding:20px">Expanding Section</h2>
-      <p style="padding:20px">This section grows to fill the screen as you scroll over it and returns to its rounded shape once you scroll past.</p>
-    </div>
-  </div>
+  <main class="snap-container">
+    <section id="mission" class="snap-section mission-section">
+      <div class="mission-content">
+        <p><strong>Our Mission:</strong> <span class="mission-blurb">Lorem ipsum dolor sit <span class="gold">amet,</span> consectetur adipiscing <span class="gold">elit,</span> sed do eiusmod <span class="gold">tempor</span> incididunt ut labore et <span class="gold">dolore</span> magna aliqua. Ut enim ad <span class="gold">minim</span> veniam, quis nostrud exercitation ullamco laboris ut.</span></p>
+      </div>
+    </section>
+    <section id="investors" class="snap-section investors-section">
+      <div class="investor-cards">
+        <div class="investor-card">Level 1 - Starter</div>
+        <div class="investor-card">Level 2 - Growth</div>
+        <div class="investor-card">Level 3 - Premium</div>
+      </div>
+    </section>
+    <section id="testimonials-1" class="snap-section testimonials-section">
+      <div class="testimonials">
+        <blockquote>"Amazing team and solid returns."</blockquote>
+        <blockquote>"A partner you can trust."</blockquote>
+      </div>
+    </section>
+    <section id="sellers" class="snap-section sellers-section">
+      <div class="sellers-content">
+        <img src="sample-image" alt="Property" class="seller-img" />
+        <div>
+          <h2>Motivated Sellers</h2>
+          <p>We close quickly and make the process simple for owners and agents alike.</p>
+        </div>
+      </div>
+    </section>
+    <section id="testimonials-2" class="snap-section testimonials-section">
+      <div class="testimonials">
+        <blockquote>"Smooth transactions every time."</blockquote>
+        <blockquote>"Highly recommend their services."</blockquote>
+      </div>
+    </section>
+  </main>
   <div id="investor-portal-popup" class="popup">
     <div class="popup-content">
       <button class="popup-close">&times;</button>
@@ -563,7 +631,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      &copy; 2025 Gouru. All Rights Reserved. <a href="https://gouru.org">gouru.org</a> | <a href="https://gouru.foundation">gouru.foundation</a>
+      &copy; 2025 Gouru. All Rights Reserved.
     </div>
   </footer>
   <script>
@@ -571,29 +639,16 @@
     const navLinks = document.querySelector('.nav-links');
     const closeBtn = document.querySelector('.close-btn');
 
-    // expanding section behavior
-    const expandWrapper = document.querySelector('.expand-wrapper');
-    const expandSection = document.querySelector('.expand-section');
+      // hero shrink behavior
+      const hero = document.getElementById('hero');
 
-    // hero shrink behavior
-    const hero = document.getElementById('hero');
-
-    function checkExpand() {
-      const rect = expandWrapper.getBoundingClientRect();
-      if (rect.top < window.innerHeight && rect.bottom > 0) {
-        expandSection.classList.add('full');
-      } else {
-        expandSection.classList.remove('full');
+      function checkHero() {
+        if (window.scrollY > 50) {
+          hero.classList.add('shrink');
+        } else {
+          hero.classList.remove('shrink');
+        }
       }
-    }
-
-    function checkHero() {
-      if (window.scrollY > 50) {
-        hero.classList.add('shrink');
-      } else {
-        hero.classList.remove('shrink');
-      }
-    }
 
     hamburger.addEventListener('click', () => {
       navLinks.classList.add('open');
@@ -612,13 +667,21 @@
       portalPopup.style.display = "none";
     });
 
-    document.addEventListener('scroll', () => {
-      checkExpand();
+    const investorCards = document.querySelectorAll('.investor-card');
+    const cardObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.3 });
+    investorCards.forEach(card => cardObserver.observe(card));
+
+      document.addEventListener('scroll', () => {
+        checkHero();
+      });
+      // initial state on load
       checkHero();
-    });
-    // initial state on load
-    checkExpand();
-    checkHero();
   </script>
 </body>
 </html>
