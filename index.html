@@ -82,9 +82,10 @@
     }
     .hero {
       position: relative;
-      height: 100vh;
+      height: 90vh;
       width: 100%;
       overflow: hidden;
+      background: url('sample-image') center/cover no-repeat;
       transition: height 0.5s ease, border-radius 0.5s ease;
     }
     .hero.shrink {
@@ -103,11 +104,43 @@
 */
     .hero-text {
       position: absolute;
-      bottom: 20px;
+      bottom: 40px;
       left: 20px;
       color: #fff;
       font-size: 2rem;
       line-height: 1.2;
+    }
+    .hero-buttons {
+      margin-top: 20px;
+    }
+    .hero-btn {
+      display: inline-block;
+      padding: 10px 20px;
+      margin-right: 10px;
+      border: 2px solid #fff;
+      border-radius: 30px;
+      color: #fff;
+      text-decoration: none;
+    }
+    .hero-btn:hover {
+      background: #fff;
+      color: var(--color-primary);
+    }
+    .scroll-arrow {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      font-size: 2rem;
+      color: #fff;
+      opacity: 0;
+      animation: arrow-fade 1s forwards 15s, bounce 2s infinite 15s;
+    }
+    @keyframes arrow-fade {
+      to { opacity: 1; }
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
     }
     /* legacy hero styles removed */
     .copyright {
@@ -167,6 +200,8 @@
     transform: translateX(-50%);
     width: auto;
     max-width: calc(100vw - 40px);
+    min-width: 220px;
+    border-radius: 10px;
     background: rgba(255, 255, 255, 0.95);
     padding: 20px;
     display: none;
@@ -255,6 +290,7 @@
   /* scroll snap sections */
   html {
     scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
   }
   .snap-section {
     scroll-snap-align: center;
@@ -536,12 +572,14 @@
     <button class="nav-right" id="investor-portal-btn">Investor Portal</button>
   </nav>
   <div id="hero" class="hero">
-<!--    <iframe src="https://www.youtube.com/embed/_HVATY4rdGw?autoplay=1&amp;mute=1&amp;controls=0&amp;loop=1&amp;playlist=_HVATY4rdGw" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>-->
     <div class="hero-text">
-      <p>Innovate.</p>
-      <p>Create.</p>
-      <p>Inspire.</p>
+      <p>We invest in the development of communities and people.</p>
+      <div class="hero-buttons">
+        <a href="#" class="hero-btn">Invest with us</a>
+        <a href="#" class="hero-btn">Sell your property</a>
+      </div>
     </div>
+    <div class="scroll-arrow">&#x2193;</div>
   </div>
 
   <main class="snap-container">
