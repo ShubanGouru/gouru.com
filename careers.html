@@ -182,10 +182,10 @@
   .dropdown-sections {
     display: flex;
     gap: 20px;
-    justify-content: space-between;
+    justify-content: flex-start;
   }
   .dropdown-col {
-    flex: 1;
+    flex: 0 0 auto;
     padding: 10px;
     border-right: 1px solid var(--color-neutral-light);
   }
@@ -202,6 +202,9 @@
   }
   .dropdown-col.image-col img {
     max-height: 60px;
+  }
+  .dropdown-content a {
+    white-space: nowrap;
   }
 
     .nav-left,
