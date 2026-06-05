@@ -1,0 +1,123 @@
+---
+import Base from "../layouts/Base.astro";
+import CtaBand from "../components/CtaBand.astro";
+import { SITE } from "../consts";
+
+const whatWeDo = [
+  {
+    title: "Built for the work",
+    body: "Software shaped around how real estate actually operates — the daily realities of deals, properties, and the people who manage them.",
+  },
+  {
+    title: "Clarity over clutter",
+    body: "Considered, uncluttered interfaces that cut busywork and keep the information that matters in plain view.",
+  },
+  {
+    title: "Dependable by design",
+    body: "Reliable, secure, and privacy-respecting foundations — the kind of software you can build a business on.",
+  },
+];
+
+const whoItsFor = [
+  {
+    title: "Agents & brokers",
+    body: "Independent professionals who want capable tools without the overhead of enterprise software.",
+  },
+  {
+    title: "Teams & brokerages",
+    body: "Groups that need to stay coordinated, consistent, and fast as the work scales.",
+  },
+  {
+    title: "Operators & owners",
+    body: "The people running portfolios and operations who depend on clean information and dependable systems.",
+  },
+];
+---
+
+<Base
+  title={`${SITE.name} — ${SITE.tagline}`}
+  description={SITE.description}
+  rawTitle={true}
+>
+  <!-- Hero -->
+  <section class="wrap pt-16 pb-20 md:pt-28 md:pb-28">
+    <p class="eyebrow reveal" style="animation-delay: 0ms">
+      Real estate software
+    </p>
+    <h1
+      class="display reveal mt-6 text-[clamp(2.6rem,6vw+1rem,5.25rem)]"
+      style="animation-delay: 90ms"
+    >
+      Modern software<br class="hidden sm:block" /> for real estate.
+    </h1>
+    <p
+      class="lead reveal mt-7 max-w-2xl"
+      style="animation-delay: 180ms"
+    >
+      We build clean, dependable tools that help real estate professionals and
+      teams work with less friction and more clarity.
+    </p>
+    <div
+      class="reveal mt-9 flex flex-wrap items-center gap-3"
+      style="animation-delay: 260ms"
+    >
+      <a href="/platform/" class="btn btn-primary">See what we build</a>
+      <a href="/contact/" class="btn btn-ghost">Get in touch</a>
+    </div>
+  </section>
+
+  <hr class="rule wrap" />
+
+  <!-- What we do -->
+  <section class="wrap py-20 md:py-28">
+    <div class="grid gap-12 md:grid-cols-[0.8fr_1.2fr] md:gap-16">
+      <div>
+        <p class="eyebrow">What we do</p>
+        <h2 class="display mt-5 text-3xl md:text-[2.6rem]">
+          Tools that respect the work.
+        </h2>
+        <p class="mt-5 max-w-md text-body">
+          Real estate runs on relationships and judgment. Our job is to clear
+          the friction around that work — never to add to it.
+        </p>
+      </div>
+      <ul class="grid gap-px overflow-hidden rounded-2xl border border-line bg-line">
+        {
+          whatWeDo.map((item) => (
+            <li class="bg-paper p-7 md:p-8">
+              <h3 class="text-lg font-medium text-ink">{item.title}</h3>
+              <p class="mt-2.5 text-body">{item.body}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- Who it's for -->
+  <section class="bg-paper-deep py-20 md:py-28">
+    <div class="wrap">
+      <p class="eyebrow">Who it's for</p>
+      <h2 class="display mt-5 max-w-2xl text-3xl md:text-[2.6rem]">
+        Made for the people who move real estate forward.
+      </h2>
+      <div class="mt-12 grid gap-x-10 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          whoItsFor.map((item, i) => (
+            <div class="border-t border-line-strong pt-5">
+              <span class="font-display text-2xl text-navy-500">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <h3 class="mt-3 text-lg font-medium text-ink">{item.title}</h3>
+              <p class="mt-2 text-body">{item.body}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <div class="pt-20 md:pt-28">
+    <CtaBand />
+  </div>
+</Base>

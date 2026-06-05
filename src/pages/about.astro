@@ -1,0 +1,84 @@
+---
+import Base from "../layouts/Base.astro";
+import CtaBand from "../components/CtaBand.astro";
+import { SITE } from "../consts";
+
+// ---------------------------------------------------------------------------
+// OPTIONAL FOUNDER BLOCK
+// Set `showFounder` to true and fill in the details to publish it, or leave
+// it false to omit the block entirely. Nothing renders while this is false.
+// ---------------------------------------------------------------------------
+const showFounder = false;
+const founder = {
+  name: "[OPTIONAL: FOUNDER NAME]",
+  role: "Founder",
+  bio: "[OPTIONAL: 1–2 SENTENCE BIO]",
+};
+---
+
+<Base
+  title="About"
+  description={`${SITE.legalName} is an early-stage software company focused on the real estate industry — building modern, dependable tools for the people and teams who move real estate forward.`}
+>
+  <section class="wrap pt-16 pb-12 md:pt-24 md:pb-16">
+    <p class="eyebrow">About</p>
+    <h1 class="display mt-6 max-w-3xl text-[clamp(2.3rem,4vw+1rem,4rem)]">
+      A software company for the real estate industry.
+    </h1>
+  </section>
+
+  <section class="wrap pb-20 md:pb-28">
+    <div class="grid gap-12 md:grid-cols-[0.55fr_1fr] md:gap-16">
+      <div>
+        <p class="text-sm font-medium uppercase tracking-[0.16em] text-muted">
+          {SITE.legalName}
+        </p>
+      </div>
+      <div class="max-w-2xl space-y-6 text-lg leading-relaxed text-body">
+        <p>
+          {SITE.legalName} is an early-stage software company focused on the
+          real estate industry. We design and build digital tools for the
+          professionals and teams whose work moves property — and the people
+          behind it — forward.
+        </p>
+        <p>
+          We believe real estate runs on relationships and good judgment, and
+          that software's role is to clear friction rather than create it. So we
+          build deliberately: we keep our products focused, treat reliability
+          and privacy as features rather than afterthoughts, and hold a high bar
+          for clarity in everything we ship.
+        </p>
+        <p>
+          We're early in our journey and building for the long term — laying
+          careful foundations now so the tools we make stay dependable as they
+          grow. If that approach resonates with how you work, we'd like to hear
+          from you.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  {
+    showFounder && (
+      <section class="bg-paper-deep py-16 md:py-20">
+        <div class="wrap">
+          <p class="eyebrow">Founder</p>
+          <div class="mt-6 max-w-2xl">
+            <h2 class="display text-2xl md:text-3xl">{founder.name}</h2>
+            <p class="mt-1 text-sm uppercase tracking-[0.16em] text-muted">
+              {founder.role}
+            </p>
+            <p class="mt-4 text-lg leading-relaxed text-body">{founder.bio}</p>
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  <div class="pt-20 md:pt-28">
+    <CtaBand
+      heading="Want to know more?"
+      body="We're happy to talk about what we're building and where we're headed."
+    />
+  </div>
+</Base>

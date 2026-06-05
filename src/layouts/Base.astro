@@ -1,0 +1,92 @@
+---
+import "../styles/global.css";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { SITE } from "../consts";
+
+interface Props {
+  /** Page <title> (the " — Gouru" suffix is added automatically). */
+  title: string;
+  /** Meta description for this page. */
+  description: string;
+  /** Optional: render the title verbatim without the brand suffix. */
+  rawTitle?: boolean;
+}
+
+const { title, description, rawTitle = false } = Astro.props;
+
+const fullTitle = rawTitle ? title : `${title} — ${SITE.name}`;
+const canonical = new URL(Astro.url.pathname, SITE.url).href;
+const ogImage = new URL("/og-image.png", SITE.url).href;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+
+    <!-- Icons -->
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="theme-color" content="#072547" />
+
+    <!-- Open Graph / Twitter -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={SITE.name} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <!--
+      Note: the Astro "generator" meta tag is intentionally omitted so no
+      framework branding ships in the page metadata.
+    -->
+
+    <!-- Preload the two render-critical fonts -->
+    <link
+      rel="preload"
+      href="/fonts/neue-montreal-regular.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/giaza.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+  </head>
+
+  <body class="flex min-h-dvh flex-col">
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-full focus:bg-navy focus:px-4 focus:py-2 focus:text-paper"
+    >
+      Skip to content
+    </a>
+
+    <Header />
+
+    <main id="main" class="flex-1">
+      <slot />
+    </main>
+
+    <Footer />
+  </body>
+</html>

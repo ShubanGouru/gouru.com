@@ -1,0 +1,56 @@
+---
+import Base from "../layouts/Base.astro";
+import { SITE } from "../consts";
+---
+
+<Base
+  title="Contact"
+  description={`Get in touch with ${SITE.legalName}. Email us at ${SITE.email}.`}
+>
+  <section class="wrap pt-16 pb-24 md:pt-24 md:pb-32">
+    <div class="grid gap-12 md:grid-cols-[0.9fr_1.1fr] md:gap-16">
+      <div>
+        <p class="eyebrow">Contact</p>
+        <h1 class="display mt-6 text-[clamp(2.4rem,4vw+1rem,4.25rem)]">
+          Let's talk.
+        </h1>
+        <p class="lead mt-7 max-w-md">
+          For general questions, partnerships, or press, email us directly. We
+          read everything that comes in and aim to reply thoughtfully.
+        </p>
+      </div>
+
+      <div class="md:pt-4">
+        <dl class="space-y-10">
+          <div class="border-t border-line-strong pt-5">
+            <dt class="text-sm font-medium uppercase tracking-[0.16em] text-muted">
+              Company
+            </dt>
+            <dd class="mt-2 text-xl font-medium text-navy md:text-2xl">
+              {SITE.legalName}
+            </dd>
+          </div>
+
+          <div class="border-t border-line-strong pt-5">
+            <dt class="text-sm font-medium uppercase tracking-[0.16em] text-muted">
+              Email
+            </dt>
+            <dd class="mt-2">
+              <a
+                href={`mailto:${SITE.email}`}
+                class="display text-3xl text-navy underline decoration-line-strong decoration-1 underline-offset-[6px] transition-colors hover:decoration-navy md:text-4xl"
+              >
+                {SITE.email}
+              </a>
+            </dd>
+          </div>
+        </dl>
+
+        <p class="mt-12 max-w-md text-sm leading-relaxed text-muted">
+          We keep this simple on purpose — one inbox, read by real people. The
+          fastest way to reach {SITE.name} is the address above.
+        </p>
+      </div>
+    </div>
+  </section>
+</Base>

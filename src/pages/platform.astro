@@ -1,0 +1,75 @@
+---
+import Base from "../layouts/Base.astro";
+import CtaBand from "../components/CtaBand.astro";
+import { SITE } from "../consts";
+
+const blocks = [
+  {
+    label: "01",
+    title: "Purpose-built tools",
+    body: "We build software for the real workflows of real estate — designed around the day-to-day rather than bolted on after the fact. The aim is software that feels obvious to use because it was shaped around the work it supports.",
+  },
+  {
+    label: "02",
+    title: "A foundation that fits",
+    body: "Our products are built to work the way teams already do, not to force a new process on them. We care about the connective tissue — clean data, sensible defaults, and tools that cooperate instead of competing for attention.",
+  },
+  {
+    label: "03",
+    title: "Built to grow",
+    body: "We're early and building deliberately. The platform will expand over time, but our standard stays constant: reliable, secure, private, and clear. We'd rather ship something dependable than something merely impressive.",
+  },
+];
+---
+
+<Base
+  title="Platform"
+  description="An overview of what Gouru & Co. LLC builds — purpose-built, dependable software for the real estate industry."
+>
+  <section class="wrap pt-16 pb-12 md:pt-24 md:pb-16">
+    <p class="eyebrow">Platform</p>
+    <h1 class="display mt-6 max-w-3xl text-[clamp(2.3rem,4vw+1rem,4rem)]">
+      Software and tools for real estate.
+    </h1>
+    <p class="lead mt-7 max-w-2xl">
+      A high-level look at what we build and the principles behind it. We keep
+      this honest and forward-looking — describing how we work, not promising
+      specifics we haven't shipped.
+    </p>
+  </section>
+
+  <section class="wrap pb-8 md:pb-12">
+    <div class="grid gap-px overflow-hidden rounded-2xl border border-line bg-line">
+      {
+        blocks.map((block) => (
+          <article class="grid gap-4 bg-paper p-7 md:grid-cols-[5rem_1fr] md:gap-8 md:p-10">
+            <span class="font-display text-3xl text-navy-500">{block.label}</span>
+            <div class="max-w-2xl">
+              <h2 class="text-xl font-medium text-ink md:text-2xl">
+                {block.title}
+              </h2>
+              <p class="mt-3 text-body">{block.body}</p>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="wrap py-16 md:py-20">
+    <div class="wrap-narrow mx-auto text-center">
+      <p class="display text-2xl leading-snug text-navy md:text-3xl">
+        “We'd rather build a few things people can rely on than many things they
+        can't.”
+      </p>
+      <p class="mt-5 text-sm uppercase tracking-[0.16em] text-muted">
+        {SITE.legalName}
+      </p>
+    </div>
+  </section>
+
+  <CtaBand
+    heading="Curious where we're headed?"
+    body="Reach out — we're glad to share more about the roadmap and how we think."
+  />
+</Base>

@@ -1,0 +1,46 @@
+---
+import { NAV, SITE } from "../consts";
+
+// Normalize the current path so "/about/" matches the nav href "/about/".
+const path = Astro.url.pathname;
+const isActive = (href: string) =>
+  href === "/" ? path === "/" : path.startsWith(href);
+---
+
+<header class="border-b border-line">
+  <div class="wrap flex items-center justify-between gap-4 py-4 md:py-5">
+    <a href="/" class="flex items-center gap-2.5" aria-label={`${SITE.name} — home`}>
+      <img
+        src="/mark.png"
+        alt=""
+        width="30"
+        height="30"
+        class="h-7 w-7"
+        loading="eager"
+        decoding="async"
+      />
+      <span class="text-lg font-medium tracking-tight text-navy">{SITE.name}</span>
+    </a>
+
+    <nav aria-label="Primary">
+      <ul class="flex items-center gap-5 text-sm sm:gap-7">
+        {
+          NAV.filter((item) => item.href !== "/").map((item) => (
+            <li>
+              <a
+                href={item.href}
+                aria-current={isActive(item.href) ? "page" : undefined}
+                class:list={[
+                  "inline-block py-1 transition-colors hover:text-navy",
+                  isActive(item.href) ? "text-navy" : "text-body",
+                ]}
+              >
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
+</header>

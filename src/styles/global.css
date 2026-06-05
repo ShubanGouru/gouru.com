@@ -1,0 +1,271 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------------------
+   Brand typefaces — self-hosted (no third-party requests).
+   Giaza: high-contrast editorial serif, used only for display headlines.
+   Neue Montreal: refined grotesque, used for everything else.
+--------------------------------------------------------------------------- */
+@font-face {
+  font-family: "Neue Montreal";
+  src: url("/fonts/neue-montreal-regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Neue Montreal";
+  src: url("/fonts/neue-montreal-medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Neue Montreal";
+  src: url("/fonts/neue-montreal-bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Giaza";
+  src: url("/fonts/giaza.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ---------------------------------------------------------------------------
+   Design tokens. Tailwind v4 reads these to generate utilities such as
+   bg-paper, text-navy, border-line, font-display, etc.
+   Palette: one brand color (navy, sampled from the logo) + warm neutrals.
+--------------------------------------------------------------------------- */
+@theme {
+  --color-paper: #f8f6f0;
+  --color-paper-deep: #f1ebdf;
+  --color-navy: #072547;
+  --color-navy-700: #0c3461;
+  --color-navy-500: #1f5285;
+  --color-ink: #1b2733;
+  --color-body: #38434f;
+  --color-muted: #5b636d;
+  --color-line: #e3ddd0;
+  --color-line-strong: #d6cfbf;
+
+  --font-sans: "Neue Montreal", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-display: "Giaza", Georgia, "Times New Roman", serif;
+
+  --shadow-soft: 0 1px 2px rgba(7, 37, 71, 0.04), 0 12px 32px -16px rgba(7, 37, 71, 0.18);
+}
+
+/* ---------------------------------------------------------------------------
+   Base
+--------------------------------------------------------------------------- */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-paper);
+    color: var(--color-body);
+    font-family: var(--font-sans);
+    font-weight: 400;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1, h2, h3, h4 {
+    color: var(--color-navy);
+    text-wrap: balance;
+  }
+
+  ::selection {
+    background-color: var(--color-navy);
+    color: var(--color-paper);
+  }
+
+  a {
+    color: inherit;
+  }
+
+  /* Visible, on-brand keyboard focus everywhere. */
+  :focus-visible {
+    outline: 2px solid var(--color-navy);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+    }
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Components — kept deliberately small and semantic.
+--------------------------------------------------------------------------- */
+@layer components {
+  /* Centered content column with fluid gutters. */
+  .wrap {
+    width: 100%;
+    max-width: 72rem;
+    margin-inline: auto;
+    padding-inline: clamp(1.25rem, 5vw, 2.5rem);
+  }
+  .wrap-narrow {
+    max-width: 46rem;
+  }
+
+  /* Small uppercase label that sits above headings. */
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-navy-500);
+  }
+  .eyebrow::before {
+    content: "";
+    width: 1.6rem;
+    height: 1px;
+    background-color: var(--color-navy-500);
+    opacity: 0.6;
+  }
+
+  /* Editorial display headline. */
+  .display {
+    font-family: var(--font-display);
+    font-weight: 400;
+    line-height: 1.02;
+    letter-spacing: -0.01em;
+    color: var(--color-navy);
+  }
+
+  /* Larger introductory paragraph. */
+  .lead {
+    font-size: clamp(1.1rem, 0.95rem + 0.7vw, 1.375rem);
+    line-height: 1.55;
+    color: var(--color-ink);
+  }
+
+  /* Buttons */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.55rem;
+    padding: 0.85rem 1.5rem;
+    font-size: 0.95rem;
+    font-weight: 500;
+    line-height: 1;
+    border-radius: 999px;
+    transition: transform 0.2s ease, background-color 0.2s ease,
+      color 0.2s ease, border-color 0.2s ease;
+    will-change: transform;
+  }
+  .btn:hover {
+    transform: translateY(-1px);
+  }
+  .btn-primary {
+    background-color: var(--color-navy);
+    color: var(--color-paper);
+  }
+  .btn-primary:hover {
+    background-color: var(--color-navy-700);
+  }
+  .btn-ghost {
+    border: 1px solid var(--color-line-strong);
+    color: var(--color-navy);
+  }
+  .btn-ghost:hover {
+    border-color: var(--color-navy);
+  }
+
+  /* Underline-on-hover text link. */
+  .link {
+    color: var(--color-navy);
+    text-decoration: underline;
+    text-decoration-color: var(--color-line-strong);
+    text-underline-offset: 0.22em;
+    text-decoration-thickness: 1px;
+    transition: text-decoration-color 0.2s ease;
+  }
+  .link:hover {
+    text-decoration-color: var(--color-navy);
+  }
+
+  /* Hairline used to separate sections. */
+  .rule {
+    border: 0;
+    border-top: 1px solid var(--color-line);
+  }
+
+  /* Readable long-form column for legal pages. */
+  .legal {
+    color: var(--color-body);
+  }
+  .legal h2 {
+    font-family: var(--font-display);
+    font-size: clamp(1.35rem, 1.1rem + 1vw, 1.75rem);
+    margin-top: 2.75rem;
+    margin-bottom: 0.75rem;
+  }
+  .legal h3 {
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: var(--color-ink);
+    margin-top: 1.75rem;
+    margin-bottom: 0.4rem;
+  }
+  .legal p {
+    margin-bottom: 1rem;
+  }
+  .legal ul {
+    margin: 0 0 1.25rem;
+    padding-left: 1.1rem;
+    list-style: none;
+  }
+  .legal li {
+    position: relative;
+    padding-left: 1rem;
+    margin-bottom: 0.55rem;
+  }
+  .legal li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.68em;
+    width: 5px;
+    height: 5px;
+    border-radius: 999px;
+    background-color: var(--color-navy-500);
+  }
+  .legal a {
+    color: var(--color-navy);
+    text-decoration: underline;
+    text-underline-offset: 0.18em;
+  }
+
+  /* Entrance animation — staggered, and disabled for reduced motion. */
+  .reveal {
+    opacity: 0;
+    transform: translateY(14px);
+    animation: reveal 0.7s cubic-bezier(0.2, 0.65, 0.3, 1) forwards;
+  }
+  @keyframes reveal {
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}

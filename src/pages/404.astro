@@ -1,0 +1,23 @@
+---
+import Base from "../layouts/Base.astro";
+---
+
+<Base
+  title="Page not found"
+  description="The page you were looking for could not be found."
+>
+  <section class="wrap flex min-h-[50vh] flex-col items-start justify-center py-24">
+    <p class="eyebrow">Error 404</p>
+    <h1 class="display mt-6 text-[clamp(2.4rem,5vw+1rem,4.5rem)]">
+      This page wandered off.
+    </h1>
+    <p class="lead mt-6 max-w-lg">
+      The page you were looking for doesn't exist or has moved. Let's get you
+      back on track.
+    </p>
+    <div class="mt-9 flex flex-wrap gap-3">
+      <a href="/" class="btn btn-primary">Back to home</a>
+      <a href="/contact/" class="btn btn-ghost">Contact us</a>
+    </div>
+  </section>
+</Base>

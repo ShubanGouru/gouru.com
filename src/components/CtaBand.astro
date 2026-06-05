@@ -1,0 +1,26 @@
+---
+import { SITE } from "../consts";
+
+interface Props {
+  heading?: string;
+  body?: string;
+}
+
+const {
+  heading = "Building something for real estate?",
+  body = "We'd genuinely like to hear about it. Tell us what you're working on.",
+} = Astro.props;
+---
+
+<section class="wrap">
+  <div
+    class="rounded-3xl border border-line bg-paper-deep px-6 py-12 text-center md:px-12 md:py-16"
+  >
+    <h2 class="display text-3xl md:text-4xl">{heading}</h2>
+    <p class="mx-auto mt-4 max-w-xl text-body">{body}</p>
+    <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
+      <a href="/contact/" class="btn btn-primary">Get in touch</a>
+      <a href={`mailto:${SITE.email}`} class="btn btn-ghost">{SITE.email}</a>
+    </div>
+  </div>
+</section>
