@@ -1,8 +1,29 @@
 # Deploying gouru.com (step-by-step)
 
-This guide assumes you are **not** a developer. Follow it top to bottom. It
-publishes this site at **https://gouru.com** using **GitHub Pages**, which is
-free and serves over HTTPS.
+> ## ✅ Current status — already live
+>
+> As of **2026-06-05**, this site is **deployed and live at https://gouru.com**
+> over HTTPS. The code is pushed, GitHub Pages is set to the **GitHub Actions**
+> source, the custom domain and SSL certificate are active, and "Enforce HTTPS"
+> is on. **Steps 1–4 below are already done** — they're kept as reference.
+>
+> **The one thing left (optional):** `www.gouru.com` does not resolve yet. If you
+> want `www` to work, add a single DNS record at **Squarespace** (where
+> gouru.com's DNS lives):
+>
+> | Type | Name | Value |
+> | --- | --- | --- |
+> | CNAME | `www` | `shubangouru.github.io` |
+>
+> The bare `gouru.com` already works without it.
+>
+> Everything below is the full reference guide (useful if you ever re-create the
+> repo or need to understand the setup).
+
+---
+
+This guide assumes you are **not** a developer. It publishes this site at
+**https://gouru.com** using **GitHub Pages**, which is free and serves over HTTPS.
 
 The repository already contains an automated workflow
 (`.github/workflows/deploy.yml`). Once set up, **every time you push changes to
