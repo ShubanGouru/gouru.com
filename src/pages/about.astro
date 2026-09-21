@@ -3,82 +3,106 @@ import Base from "../layouts/Base.astro";
 import CtaBand from "../components/CtaBand.astro";
 import { SITE } from "../consts";
 
-// ---------------------------------------------------------------------------
-// OPTIONAL FOUNDER BLOCK
-// Set `showFounder` to true and fill in the details to publish it, or leave
-// it false to omit the block entirely. Nothing renders while this is false.
-// ---------------------------------------------------------------------------
-const showFounder = false;
-const founder = {
-  name: "[OPTIONAL: FOUNDER NAME]",
-  role: "Founder",
-  bio: "[OPTIONAL: 1–2 SENTENCE BIO]",
-};
+/**
+ * Written about disciplines rather than individuals. No names, titles, track
+ * records, or deal counts appear here, because none have been supplied and an
+ * about page is the last place to approximate.
+ */
+const disciplines = [
+  {
+    title: "Property improvement & management",
+    body: "Time spent on the side of the business where the work actually happens: unit turns, contractors and vendors, capital projects, resident relationships, and the daily operating decisions that quietly determine whether a building performs.",
+  },
+  {
+    title: "Multifamily acquisitions",
+    body: "Sourcing, underwriting, and negotiating multifamily transactions. Knowing what a building is worth, what it will genuinely cost to fix, and — just as importantly — when to walk away from one.",
+  },
+  {
+    title: "Value-add investment",
+    body: "Structuring improvement plans, putting capital behind them, and staying accountable for what they produce. Experience on the investment side of the table as well as the operating side.",
+  },
+];
+
+const principles = [
+  {
+    title: "We say no quickly and clearly",
+    body: "A fast, honest no is worth more to a seller or a broker than a slow maybe. If a property is not for us, we will say so and tell you why.",
+  },
+  {
+    title: "We underwrite our own deals",
+    body: "No outsourced analysis, no rubber-stamping someone else's model. If we are wrong about a building, we are wrong in our own handwriting.",
+  },
+  {
+    title: "We stand behind the number we give",
+    body: "We do not put a price in front of a seller and then look for reasons to reduce it once they have stopped talking to other buyers.",
+  },
+];
 ---
 
 <Base
   title="About"
-  description={`${SITE.legalName} is an early-stage software company focused on the real estate industry — building modern, dependable tools for the people and teams who move real estate forward.`}
+  description={`${SITE.brandName} is a real estate investment firm built by people who have worked across property improvement and management, multifamily acquisitions, and value-add investment.`}
 >
+  <!-- Hero -->
   <section class="wrap pt-16 pb-12 md:pt-24 md:pb-16">
     <p class="eyebrow">About</p>
-    <h1 class="display mt-6 max-w-3xl text-[clamp(2.3rem,4vw+1rem,4rem)]">
-      A software company for the real estate industry.
+    <h1 class="display mt-6 max-w-4xl text-[clamp(2.5rem,5vw+1rem,4.75rem)]">
+      We come at this from the building side.
     </h1>
+    <p class="lead mt-7 max-w-2xl">
+      {SITE.brandName} was built by people whose backgrounds sit in different
+      corners of the same industry. That mix is deliberate: the person who has
+      managed a property and the person who has underwritten one tend to notice
+      different things, and both are worth having in the room.
+    </p>
   </section>
 
-  <section class="wrap pb-20 md:pb-28">
-    <div class="grid gap-12 md:grid-cols-[0.55fr_1fr] md:gap-16">
-      <div>
-        <p class="text-sm font-medium uppercase tracking-[0.16em] text-muted">
-          {SITE.legalName}
-        </p>
-      </div>
-      <div class="max-w-2xl space-y-6 text-lg leading-relaxed text-body">
-        <p>
-          {SITE.legalName} is an early-stage software company focused on the
-          real estate industry. We design and build digital tools for the
-          professionals and teams whose work moves property — and the people
-          behind it — forward.
-        </p>
-        <p>
-          We believe real estate runs on relationships and good judgment, and
-          that software's role is to clear friction rather than create it. So we
-          build deliberately: we keep our products focused, treat reliability
-          and privacy as features rather than afterthoughts, and hold a high bar
-          for clarity in everything we ship.
-        </p>
-        <p>
-          We're early in our journey and building for the long term — laying
-          careful foundations now so the tools we make stay dependable as they
-          grow. If that approach resonates with how you work, we'd like to hear
-          from you.
-        </p>
+  <!-- Disciplines -->
+  <section class="wrap py-14 md:py-20">
+    <p class="eyebrow">Where we come from</p>
+    <h2 class="display mt-6 max-w-2xl text-3xl md:text-[2.75rem]">
+      Three disciplines, one table.
+    </h2>
+    <div class="mt-12 grid gap-10 md:grid-cols-3 md:gap-8">
+      {
+        disciplines.map((item) => (
+          <div class="border-t border-line pt-5">
+            <h3 class="text-lg font-medium leading-snug">{item.title}</h3>
+            <p class="mt-3 text-body">{item.body}</p>
+          </div>
+        ))
+      }
+    </div>
+    <p class="mt-12 max-w-2xl text-body">
+      The practical result is that we can look at a property and reason about it
+      end to end — what it will cost to fix, how long the work will really take,
+      what it should earn once it is done, and what all of that is worth today.
+      Fewer assumptions get handed off to someone else.
+    </p>
+  </section>
+
+  <!-- Principles -->
+  <section class="wrap py-14 md:py-20">
+    <div class="rounded-3xl border border-line bg-paper-deep px-6 py-12 md:px-12 md:py-16">
+      <p class="eyebrow">How we work</p>
+      <h2 class="display mt-5 max-w-2xl text-3xl md:text-4xl">
+        Three things we hold ourselves to.
+      </h2>
+      <div class="mt-12 grid gap-10 md:grid-cols-3 md:gap-8">
+        {
+          principles.map((item) => (
+            <div class="border-t border-line-strong pt-5">
+              <h3 class="text-lg font-medium leading-snug">{item.title}</h3>
+              <p class="mt-3 text-body">{item.body}</p>
+            </div>
+          ))
+        }
       </div>
     </div>
   </section>
 
-  {
-    showFounder && (
-      <section class="bg-paper-deep py-16 md:py-20">
-        <div class="wrap">
-          <p class="eyebrow">Founder</p>
-          <div class="mt-6 max-w-2xl">
-            <h2 class="display text-2xl md:text-3xl">{founder.name}</h2>
-            <p class="mt-1 text-sm uppercase tracking-[0.16em] text-muted">
-              {founder.role}
-            </p>
-            <p class="mt-4 text-lg leading-relaxed text-body">{founder.bio}</p>
-          </div>
-        </div>
-      </section>
-    )
-  }
-
-  <div class="pt-20 md:pt-28">
-    <CtaBand
-      heading="Want to know more?"
-      body="We're happy to talk about what we're building and where we're headed."
-    />
-  </div>
+  <CtaBand
+    heading="Want to talk to us?"
+    body="Whether you own a building or want to invest in one, we would rather have a short conversation than exchange six emails."
+  />
 </Base>

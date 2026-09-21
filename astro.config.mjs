@@ -12,6 +12,12 @@ export default defineConfig({
   build: {
     format: "directory",
   },
+  // /platform/ described the former software business and no longer exists.
+  // A static build emits a meta-refresh page here, so the old URL still
+  // lands somewhere useful instead of 404ing for anyone holding the link.
+  redirects: {
+    "/platform": "/",
+  },
   vite: {
     plugins: [tailwindcss()],
   },

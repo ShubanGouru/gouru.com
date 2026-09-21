@@ -4,11 +4,20 @@ import { SITE } from "../consts";
 interface Props {
   heading?: string;
   body?: string;
+  primaryHref?: string;
+  primaryLabel?: string;
+  /** Omit both secondary props to render a single button. */
+  secondaryHref?: string;
+  secondaryLabel?: string;
 }
 
 const {
-  heading = "Building something for real estate?",
-  body = "We'd genuinely like to hear about it. Tell us what you're working on.",
+  heading = "Let's talk.",
+  body = "Whether you have a property to sell or capital to put to work, the first step is the same: a short conversation.",
+  primaryHref = "/contact/",
+  primaryLabel = "Get in touch",
+  secondaryHref = `tel:${SITE.phone}`,
+  secondaryLabel = SITE.phoneDisplay,
 } = Astro.props;
 ---
 
@@ -19,8 +28,14 @@ const {
     <h2 class="display text-3xl md:text-4xl">{heading}</h2>
     <p class="mx-auto mt-4 max-w-xl text-body">{body}</p>
     <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
-      <a href="/contact/" class="btn btn-primary">Get in touch</a>
-      <a href={`mailto:${SITE.email}`} class="btn btn-ghost">{SITE.email}</a>
+      <a href={primaryHref} class="btn btn-primary">{primaryLabel}</a>
+      {
+        secondaryHref && secondaryLabel && (
+          <a href={secondaryHref} class="btn btn-ghost">
+            {secondaryLabel}
+          </a>
+        )
+      }
     </div>
   </div>
 </section>

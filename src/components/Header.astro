@@ -1,15 +1,22 @@
 ---
 import { NAV, SITE } from "../consts";
 
-// Normalize the current path so "/about/" matches the nav href "/about/".
+// Normalize the current path so "/sell/" matches the nav href "/sell/".
 const path = Astro.url.pathname;
 const isActive = (href: string) =>
   href === "/" ? path === "/" : path.startsWith(href);
+
+// "Home" is reachable through the wordmark, so it is not repeated in the bar.
+const links = NAV.filter((item) => item.href !== "/");
 ---
 
 <header class="border-b border-line">
   <div class="wrap flex items-center justify-between gap-4 py-4 md:py-5">
-    <a href="/" class="flex items-center gap-2.5" aria-label={`${SITE.name} — home`}>
+    <a
+      href="/"
+      class="flex items-center gap-2.5"
+      aria-label={`${SITE.brandName} — home`}
+    >
       <img
         src="/mark.png"
         alt=""
@@ -19,28 +26,152 @@ const isActive = (href: string) =>
         loading="eager"
         decoding="async"
       />
-      <span class="text-lg font-medium tracking-tight text-navy">{SITE.name}</span>
+      <span class="text-lg font-medium tracking-tight text-navy">
+        {SITE.name}
+      </span>
     </a>
 
-    <nav aria-label="Primary">
-      <ul class="flex items-center gap-5 text-sm sm:gap-7">
-        {
-          NAV.filter((item) => item.href !== "/").map((item) => (
-            <li>
-              <a
-                href={item.href}
-                aria-current={isActive(item.href) ? "page" : undefined}
-                class:list={[
-                  "inline-block py-1 transition-colors hover:text-navy",
-                  isActive(item.href) ? "text-navy" : "text-body",
-                ]}
-              >
-                {item.label}
-              </a>
-            </li>
-          ))
-        }
-      </ul>
-    </nav>
+    <div class="flex items-center gap-6">
+      <nav class="hidden md:block" aria-label="Primary">
+        <ul class="flex items-center gap-5 text-sm lg:gap-7">
+          {
+            links.map((item) => (
+              <li>
+                <a
+                  href={item.href}
+                  aria-current={isActive(item.href) ? "page" : undefined}
+                  class:list={[
+                    "inline-block py-1 transition-colors hover:text-navy",
+                    isActive(item.href) ? "text-navy" : "text-body",
+                  ]}
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+
+      {/* Sellers often want to call rather than type. Shown where there is room. */}
+      <a
+        href={`tel:${SITE.phone}`}
+        class="hidden text-sm font-medium text-navy lg:inline-block"
+      >
+        {SITE.phoneDisplay}
+      </a>
+
+      <button
+        type="button"
+        class="-mr-2 inline-flex items-center justify-center p-2 text-navy md:hidden"
+        data-menu-toggle
+        aria-expanded="false"
+        aria-controls="mobile-nav"
+      >
+        <span class="sr-only">Menu</span>
+        <svg
+          class="icon-open h-6 w-6"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.6"
+          stroke-linecap="round"
+          aria-hidden="true"
+        >
+          <path d="M3.5 7h17M3.5 12h17M3.5 17h17"></path>
+        </svg>
+        <svg
+          class="icon-close h-6 w-6"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.6"
+          stroke-linecap="round"
+          aria-hidden="true"
+        >
+          <path d="M6 6l12 12M18 6L6 18"></path>
+        </svg>
+      </button>
+    </div>
   </div>
+
+  <nav
+    id="mobile-nav"
+    class="border-t border-line md:hidden"
+    aria-label="Primary"
+    hidden
+  >
+    <ul class="wrap flex flex-col py-2">
+      {
+        links.map((item) => (
+          <li>
+            <a
+              href={item.href}
+              aria-current={isActive(item.href) ? "page" : undefined}
+              class:list={[
+                "block border-b border-line py-3.5 text-base transition-colors hover:text-navy",
+                isActive(item.href) ? "text-navy" : "text-body",
+              ]}
+            >
+              {item.label}
+            </a>
+          </li>
+        ))
+      }
+      <li>
+        <a
+          href={`tel:${SITE.phone}`}
+          class="block py-3.5 text-base font-medium text-navy"
+        >
+          {SITE.phoneDisplay}
+        </a>
+      </li>
+    </ul>
+  </nav>
 </header>
+
+<style>
+  /*
+    The button's own aria-expanded state drives which icon shows, so the ARIA
+    attribute and the visual are guaranteed to agree — there is no second
+    class to forget to update.
+  */
+  [data-menu-toggle][aria-expanded="false"] .icon-close,
+  [data-menu-toggle][aria-expanded="true"] .icon-open {
+    display: none;
+  }
+</style>
+
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>("[data-menu-toggle]");
+  const menu = document.getElementById("mobile-nav");
+
+  if (toggle && menu) {
+    const setOpen = (open: boolean) => {
+      toggle.setAttribute("aria-expanded", String(open));
+      menu.hidden = !open;
+    };
+
+    toggle.addEventListener("click", () => {
+      setOpen(toggle.getAttribute("aria-expanded") !== "true");
+    });
+
+    // Escape closes the menu and returns focus to the control that opened it.
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && !menu.hidden) {
+        setOpen(false);
+        toggle.focus();
+      }
+    });
+
+    /*
+       Crossing into the desktop layout leaves the menu markup open behind a
+       CSS `display:none`. Reset it so returning to a narrow viewport does not
+       reveal a panel the visitor never opened.
+     */
+    const desktop = window.matchMedia("(min-width: 768px)");
+    desktop.addEventListener("change", (event) => {
+      if (event.matches) setOpen(false);
+    });
+  }
+</script>

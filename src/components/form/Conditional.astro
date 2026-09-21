@@ -1,0 +1,20 @@
+---
+/**
+ * Wraps fields that should appear only when another field holds a given value.
+ *
+ * `when` is "fieldName:value" — e.g. "hear:current-investor" shows this block
+ * only while the select named `hear` is set to `current-investor`.
+ *
+ * Starts hidden so the form is correct before the script runs (and stays
+ * correct if the script never runs at all).
+ */
+interface Props {
+  when: string;
+}
+
+const { when } = Astro.props;
+---
+
+<div class="conditional" data-show-when={when} hidden>
+  <slot />
+</div>

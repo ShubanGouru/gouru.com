@@ -1,0 +1,33 @@
+---
+import Base from "../layouts/Base.astro";
+import { SITE } from "../consts";
+
+/*
+ * Where Web3Forms returns visitors whose browser submitted the form without
+ * JavaScript. With JavaScript the success message renders inline and nobody
+ * ever arrives here, but the page has to exist for the fallback to land.
+ */
+---
+
+<Base
+  title="Thank you"
+  description="We have received your message."
+  noindex
+>
+  <section class="wrap flex min-h-[55vh] flex-col items-start justify-center py-24">
+    <p class="eyebrow">Received</p>
+    <h1 class="display mt-6 max-w-3xl text-[clamp(2.4rem,5vw+1rem,4.5rem)]">
+      Thank you. We have it.
+    </h1>
+    <p class="lead mt-6 max-w-xl">
+      Your message has reached us and a real person will read it. We reply to
+      everything that comes in, including when the answer is no.
+    </p>
+    <div class="mt-9 flex flex-wrap gap-3">
+      <a href="/" class="btn btn-primary">Back to home</a>
+      <a href={`tel:${SITE.phone}`} class="btn btn-ghost">
+        Call {SITE.phoneDisplay}
+      </a>
+    </div>
+  </section>
+</Base>

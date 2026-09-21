@@ -1,0 +1,305 @@
+---
+import Base from "../layouts/Base.astro";
+import FormShell from "../components/form/FormShell.astro";
+import Field from "../components/form/Field.astro";
+import Select from "../components/form/Select.astro";
+import Textarea from "../components/form/Textarea.astro";
+import Conditional from "../components/form/Conditional.astro";
+import { SITE } from "../consts";
+
+const thesis = [
+  {
+    title: "Below the institutional line",
+    body: "A 5 to 40 unit building is too small to interest an institutional buyer and often too large for an individual landlord. Less competition on the way in tends to mean a better basis.",
+  },
+  {
+    title: "Returns from operations, not from leverage",
+    body: "The plan is to raise net operating income by fixing what was neglected and running the property properly. Financing is a tool, not the thesis.",
+  },
+  {
+    title: "We operate what we buy",
+    body: "We are not allocating your capital to someone else's deal. We source it, underwrite it, and stay responsible for how it performs.",
+  },
+];
+
+/*
+ * FAQ answers deliberately state no minimum, no hold period, and no
+ * distribution schedule. None of those terms have been set, and publishing a
+ * figure that a future offering contradicts is worse than publishing nothing.
+ */
+const faqs = [
+  {
+    q: "What do you invest in?",
+    a: "Small multifamily: 5 to 40 unit apartment communities, primarily in North Carolina and across the Southeast, with select opportunities elsewhere in the country. We focus on light to medium value-add, meaning buildings with good bones that are underperforming because of deferred maintenance, below-market rents, or weak management.",
+  },
+  {
+    q: "Am I investing in a specific property, or a blind pool?",
+    a: "A specific property. You see the building, the business plan, and the underwriting before you commit to anything. We do not raise blind pools.",
+  },
+  {
+    q: "What is the minimum investment?",
+    a: "It varies by deal. We would rather not publish a figure here that a future offering contradicts, so the honest answer is that we will tell you where the current opportunity stands on a call.",
+  },
+  {
+    q: "Do I need to be an accredited investor?",
+    a: "Most private real estate offerings are limited to accredited investors, so in most cases yes. The form asks so we know how to route the conversation. If you are not sure whether you qualify, choose “Not sure” and we will walk you through the criteria.",
+  },
+  {
+    q: "What is a typical hold period?",
+    a: "Value-add business plans need time: long enough to complete the improvements, stabilize operations, and then sell or refinance from a position of strength. The specific horizon is set deal by deal and stated in that deal's offering documents rather than promised in advance here.",
+  },
+  {
+    q: "How and when are distributions paid?",
+    a: "The distribution structure and its timing are defined in each deal's operating agreement. We walk through the full structure with you before you commit to anything. Nothing on this page should be read as a projection of returns.",
+  },
+  {
+    q: "What are the risks?",
+    a: "Real estate can lose value. Rents can fall, expenses and interest rates can rise, renovations can run long or over budget, and these investments are illiquid, meaning your capital is committed for the life of the deal and cannot be withdrawn on demand. Offering materials set out the risks specific to that property, and you should review them with your own legal, tax, and financial advisors.",
+  },
+  {
+    q: "What happens after I submit the form?",
+    a: "We reach out to introduce ourselves and understand what you are looking for. There is no obligation and no pressure. When something comes along that fits what you have told us, we send it your way.",
+  },
+];
+---
+
+<Base
+  title="Invest with Us"
+  description="Introduce yourself to Gouru Capital Partners. We bring capital partners into small multifamily deals we source, underwrite, and operate ourselves."
+>
+  <!-- Hero -->
+  <section class="wrap pt-16 pb-12 md:pt-24 md:pb-16">
+    <p class="eyebrow">Invest with us</p>
+    <h1 class="display mt-6 max-w-4xl text-[clamp(2.5rem,5vw+1rem,4.75rem)]">
+      Invest alongside the people running the building.
+    </h1>
+    <p class="lead mt-7 max-w-2xl">
+      We bring capital partners into small multifamily deals we source,
+      underwrite, and operate ourselves. Deal by deal, with the property and the
+      plan in front of you before you decide anything.
+    </p>
+    <div class="mt-9 flex flex-wrap items-center gap-3">
+      <a href="#investor-form" class="btn btn-primary">Introduce yourself</a>
+      <a href="#faq" class="btn btn-ghost">Read the FAQ</a>
+    </div>
+  </section>
+
+  <!-- Thesis -->
+  <section class="wrap py-14 md:py-20">
+    <p class="eyebrow">How we think about it</p>
+    <h2 class="display mt-6 max-w-2xl text-3xl md:text-[2.75rem]">
+      Unglamorous buildings, run well.
+    </h2>
+    <div class="mt-12 grid gap-10 md:grid-cols-3 md:gap-8">
+      {
+        thesis.map((item) => (
+          <div class="border-t border-line pt-5">
+            <h3 class="text-lg font-medium leading-snug">{item.title}</h3>
+            <p class="mt-3 text-body">{item.body}</p>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- Form -->
+  <section id="investor-form" class="wrap scroll-mt-8 py-14 md:py-20">
+    <div class="grid gap-12 md:grid-cols-[0.85fr_1.15fr] md:gap-16">
+      <div>
+        <p class="eyebrow">Investor enquiry</p>
+        <h2 class="display mt-6 text-3xl md:text-[2.5rem]">
+          Tell us what you are looking for.
+        </h2>
+        <p class="mt-5 text-body">
+          This is an introduction, not a commitment. Nothing here obligates you
+          to anything, and we are not asking for money or documents at this
+          stage.
+        </p>
+        <p class="mt-4 text-body">
+          We would rather know what you are actually looking for than send you
+          everything we come across.
+        </p>
+
+        <dl class="mt-10 space-y-6">
+          <div class="border-t border-line-strong pt-4">
+            <dt class="text-xs font-medium uppercase tracking-[0.16em] text-muted">
+              Or reach us directly
+            </dt>
+            <dd class="mt-1.5">
+              <a href={`mailto:${SITE.email}`} class="text-xl font-medium text-navy">
+                {SITE.email}
+              </a>
+            </dd>
+            <dd class="mt-1">
+              <a href={`tel:${SITE.phone}`} class="text-xl font-medium text-navy">
+                {SITE.phoneDisplay}
+              </a>
+            </dd>
+          </div>
+        </dl>
+      </div>
+
+      <div class="card md:p-9">
+        <FormShell
+          subject="New investor inquiry — gouru.com"
+          submitLabel="Send introduction"
+          successMessage="Thank you — we have your details. We will reach out to introduce ourselves and learn more about what you are looking for."
+        >
+          <div class="grid gap-5 sm:grid-cols-2">
+            <Field label="Name" name="name" required autocomplete="name" />
+            <Field label="Phone" name="phone" type="tel" autocomplete="tel" />
+          </div>
+
+          <Field label="Email" name="email" type="email" required autocomplete="email" />
+
+          <Select
+            label="Typical investment size"
+            name="check_size"
+            placeholder="Roughly what you would consider"
+            options={[
+              "Under $50,000",
+              "$50,000 - $100,000",
+              "$100,000 - $250,000",
+              "$250,000+",
+              "Not sure yet",
+            ]}
+            hint="A rough range is fine. This is not a commitment."
+          />
+
+          <Select
+            label="Are you an accredited investor?"
+            name="accredited"
+            placeholder="Select one"
+            options={[
+              { value: "yes", label: "Yes" },
+              { value: "no", label: "No" },
+              { value: "unsure", label: "Not sure" },
+            ]}
+            hint="Most private real estate offerings are limited to accredited investors. Choose 'Not sure' and we will explain the criteria."
+          />
+
+          {/*
+            The option values are slugs, not display copy, because the
+            <Conditional> blocks below match on them. Rewording a label must
+            never silently break the reveal.
+          */}
+          <Select
+            label="How did you hear about us?"
+            name="hear"
+            required
+            placeholder="Select one"
+            options={[
+              { value: "current-investor", label: "From a current investor" },
+              { value: "referral", label: "Referred by someone else" },
+              { value: "search", label: "Search engine" },
+              { value: "social", label: "Social media" },
+              { value: "event", label: "Event or conference" },
+              { value: "other", label: "Other" },
+            ]}
+          />
+
+          <Conditional when="hear:current-investor">
+            <Field
+              label="Which investor?"
+              name="referring_investor"
+              requireWhenShown
+              hint="So we know who to thank."
+            />
+          </Conditional>
+
+          <Conditional when="hear:referral">
+            <Field
+              label="Who referred you?"
+              name="referred_by"
+              requireWhenShown
+            />
+          </Conditional>
+
+          <Conditional when="hear:other">
+            <Field
+              label="Where did you hear about us?"
+              name="hear_other"
+              requireWhenShown
+            />
+          </Conditional>
+
+          <Textarea
+            label="Anything you want us to know"
+            name="notes"
+            placeholder="What you are looking for, what you have invested in before, questions you want answered on a first call."
+          />
+        </FormShell>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="wrap scroll-mt-8 py-14 md:py-20">
+    <div class="grid gap-12 md:grid-cols-[0.7fr_1.3fr] md:gap-16">
+      <div>
+        <p class="eyebrow">FAQ</p>
+        <h2 class="display mt-6 text-3xl md:text-[2.5rem]">
+          Questions we get asked.
+        </h2>
+        <p class="mt-5 text-body">
+          Where a number has not been set, we say so rather than publishing one
+          we would later have to walk back.
+        </p>
+      </div>
+
+      <div class="border-t border-line">
+        {
+          faqs.map((faq) => (
+            <details class="faq group border-b border-line">
+              <summary class="flex cursor-pointer list-none items-start justify-between gap-6 py-5 text-lg font-medium text-navy">
+                <span>{faq.q}</span>
+                <span
+                  aria-hidden="true"
+                  class="mt-1 shrink-0 text-navy-500 transition-transform group-open:rotate-45"
+                >
+                  <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+                    <path d="M9 3.5v11M3.5 9h11" />
+                  </svg>
+                </span>
+              </summary>
+              <p class="pb-6 pr-10 text-body">{faq.a}</p>
+            </details>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Disclaimer -->
+  <section class="wrap pb-6">
+    <div class="rounded-2xl border border-line bg-paper-deep px-6 py-8 md:px-9">
+      <h2 class="text-xs font-medium uppercase tracking-[0.18em] text-muted">
+        Important disclosure
+      </h2>
+      <div class="mt-4 space-y-3 text-sm leading-relaxed text-muted">
+        <p>
+          Nothing on this website is an offer to sell, or a solicitation of an
+          offer to buy, any security. No such offer is being made here. Any
+          offering would be made only to qualified investors, through definitive
+          offering documents containing complete information about the
+          investment and its risks.
+        </p>
+        <p>
+          Real estate investments involve risk, including the possible loss of
+          the entire amount invested, and are illiquid. Nothing on this page is
+          a projection or a guarantee of any result. {SITE.brandName} is not a
+          registered investment adviser or broker-dealer, and nothing here is
+          investment, legal, or tax advice. Consult your own advisors before
+          making any investment decision.
+        </p>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* Safari renders a default disclosure triangle without this. */
+  .faq summary::-webkit-details-marker {
+    display: none;
+  }
+</style>

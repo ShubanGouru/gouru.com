@@ -1,0 +1,54 @@
+---
+/**
+ * A labelled native <select>.
+ *
+ * Options accept either bare strings (value === label) or explicit
+ * { value, label } pairs. Use explicit pairs whenever a <Conditional> keys off
+ * this field, so the matched value is a stable slug rather than display copy
+ * that someone might later reword.
+ */
+type Option = string | { value: string; label: string };
+
+interface Props {
+  label: string;
+  name: string;
+  options: readonly Option[];
+  required?: boolean;
+  /** Text for the empty leading option. */
+  placeholder?: string;
+  hint?: string;
+}
+
+const {
+  label,
+  name,
+  options,
+  required = false,
+  placeholder = "Select one",
+  hint,
+} = Astro.props;
+
+const id = `field-${name}`;
+const hintId = hint ? `${id}-hint` : undefined;
+
+const items = options.map((option) =>
+  typeof option === "string" ? { value: option, label: option } : option,
+);
+---
+
+<div>
+  <label class="field-label" for={id}>
+    {label}{required && <span class="field-req" aria-hidden="true">*</span>}
+  </label>
+  <select
+    class="select"
+    id={id}
+    name={name}
+    required={required}
+    aria-describedby={hintId}
+  >
+    <option value="">{placeholder}</option>
+    {items.map((item) => <option value={item.value}>{item.label}</option>)}
+  </select>
+  {hint && <p class="field-hint" id={hintId}>{hint}</p>}
+</div>

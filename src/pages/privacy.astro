@@ -28,8 +28,9 @@ import { SITE } from "../consts";
 
       <h2>Information we collect</h2>
       <p>
-        The Site is a static, informational website. It has no accounts, no
-        logins, and no forms. As a result, we collect very little:
+        The Site is a static, informational website. It has no accounts and
+        no logins. Apart from the contact forms described below, we collect very
+        little:
       </p>
       <ul>
         <li>
@@ -45,7 +46,36 @@ import { SITE } from "../consts";
           receive your email address and whatever information you include in
           your message. We use it only to read and respond to your inquiry.
         </li>
+        <li>
+          <strong>Form submissions.</strong> If you submit one of our forms, we
+          receive what you enter into it. Depending on the form, that may
+          include your name, email address, phone number, details about a
+          property you own, your indicated investment range, whether you have
+          identified yourself as an accredited investor, how you heard about us,
+          and any notes you add. You choose what to provide, and only the fields
+          marked as required are necessary to submit a form.
+        </li>
       </ul>
+
+      <h2>How our forms are processed</h2>
+      <p>
+        This Site is static and has no server of its own, so form submissions
+        are delivered to us by a third-party form processor,
+        <a href="https://web3forms.com" rel="noopener noreferrer">Web3Forms</a>,
+        which forwards them to our email inbox. What you type into a form
+        therefore passes through that provider on its way to us, and is handled
+        under its own privacy policy and terms in addition to this one. Its
+        servers are located in the United States.
+      </p>
+      <p>
+        Our forms include a hidden field used to detect automated submissions.
+        It is not visible to you and collects nothing about you.
+      </p>
+      <p>
+        If you would rather not use a form, you can reach us directly at
+        <a href={`mailto:${SITE.email}`}>{SITE.email}</a> or
+        <a href={`tel:${SITE.phone}`}>{SITE.phoneDisplay}</a>.
+      </p>
 
       <h2>Cookies and analytics</h2>
       <p>
@@ -61,32 +91,45 @@ import { SITE } from "../consts";
       <p>We use the limited information described above only to:</p>
       <ul>
         <li>operate, maintain, and secure the Site;</li>
-        <li>respond to questions or messages you send us; and</li>
+        <li>respond to questions or messages you send us;</li>
+        <li>
+          evaluate a property you have asked us to consider, and communicate
+          with you about it;
+        </li>
+        <li>
+          contact you about investment opportunities if you have asked us to;
+          and
+        </li>
         <li>comply with applicable legal obligations.</li>
       </ul>
 
       <h2>How we share information</h2>
       <p>
-        We do not sell or rent personal information. We may rely on trusted
-        service providers — such as our website host and email provider — who
-        process information on our behalf solely to provide those services. We
+        We do not sell or rent personal information, and we do not share it
+        with advertisers. We rely on a small number of service providers — our
+        website host, our email provider, and the form processor described above
+        — who process information on our behalf solely to provide those
+        services. We
         may also disclose information if required to do so by law or to protect
         our rights, safety, or property.
       </p>
 
       <h2>Data retention</h2>
       <p>
-        We keep email correspondence only for as long as needed to address your
-        inquiry and for reasonable record-keeping, after which it is deleted or
-        archived. Server logs are retained by our hosting provider according to
-        its standard practices.
+        We keep email correspondence and form submissions only for as long as
+        needed to address your inquiry and for reasonable record-keeping, after
+        which they are deleted or archived. Server logs are retained by our
+        hosting provider according to its standard practices, and form
+        submissions are additionally subject to the retention practices of our
+        form processor.
       </p>
 
       <h2>Your choices and rights</h2>
       <p>
         Depending on where you live, you may have rights to access, correct, or
         delete personal information we hold about you. Because we collect so
-        little, this most commonly applies to any email you have sent us. To
+        little, this most commonly applies to an email you have sent us or a
+        form you have submitted. To
         make a request, email us at
         <a href={`mailto:${SITE.email}`}>{SITE.email}</a> and we will respond in
         accordance with applicable law.

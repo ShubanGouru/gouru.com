@@ -1,0 +1,184 @@
+---
+import { SITE } from "../../consts";
+
+/**
+ * Owns everything about form submission so no page has to know about it.
+ *
+ * The site is static — there is no server to post to — so submissions go to
+ * Web3Forms, which emails them on. That endpoint and the access key appear
+ * here and nowhere else; swapping providers is a change to this one file.
+ *
+ * Fields are supplied through the default slot.
+ */
+interface Props {
+  /** Subject line on the delivered email. This is how forms are told apart. */
+  subject: string;
+  /** Submit button text. */
+  submitLabel?: string;
+  /** Inline message shown after a successful send. */
+  successMessage?: string;
+}
+
+const {
+  subject,
+  submitLabel = "Send",
+  successMessage = "Thank you — we have your message and will be in touch shortly.",
+} = Astro.props;
+---
+
+<form
+  method="POST"
+  action="https://api.web3forms.com/submit"
+  data-w3f
+  data-success={successMessage}
+  data-fallback-email={SITE.email}
+  data-fallback-phone={SITE.phoneDisplay}
+>
+  {/* Web3Forms control fields. */}
+  <input type="hidden" name="access_key" value={SITE.web3formsKey} />
+  <input type="hidden" name="subject" value={subject} />
+  <input type="hidden" name="from_name" value={SITE.brandName} />
+
+  {/*
+    Fallback for visitors without JavaScript: the form performs a normal POST
+    and Web3Forms returns them to our own thank-you page rather than its
+    default confirmation screen. The script below ignores this field.
+  */}
+  <input type="hidden" name="redirect" value={`${SITE.url}/thanks/`} />
+
+  {/*
+    Honeypot. Bots fill every field they find; humans never see this one, so
+    a checked box means the submission is automated. Web3Forms drops those.
+  */}
+  <input
+    type="checkbox"
+    name="botcheck"
+    class="hidden"
+    style="display:none"
+    tabindex="-1"
+    autocomplete="off"
+    aria-hidden="true"
+  />
+
+  <div class="space-y-5">
+    <slot />
+  </div>
+
+  <button type="submit" class="btn btn-primary mt-7 w-full sm:w-auto">
+    {submitLabel}
+  </button>
+
+  <p class="form-status" data-w3f-status role="status" aria-live="polite"></p>
+</form>
+
+<script>
+  const ENDPOINT = "https://api.web3forms.com/submit";
+
+  document.querySelectorAll<HTMLFormElement>("form[data-w3f]").forEach((form) => {
+    const status = form.querySelector<HTMLElement>("[data-w3f-status]");
+    const submit = form.querySelector<HTMLButtonElement>("button[type=submit]");
+    const conditionals =
+      form.querySelectorAll<HTMLElement>("[data-show-when]");
+
+    /**
+     * Show or hide each conditional block, and keep `required` and `disabled`
+     * in step with visibility.
+     *
+     * Both matter. A hidden field that is still `required` blocks submission
+     * with a browser message pointing at something invisible. A hidden field
+     * that is still enabled submits a stale answer the visitor has already
+     * moved away from — `disabled` keeps it out of the FormData entirely.
+     */
+    function syncConditionals() {
+      conditionals.forEach((block) => {
+        const [fieldName, expected] = (block.dataset.showWhen ?? "").split(":");
+        const field = form.elements.namedItem(fieldName) as
+          | HTMLInputElement
+          | HTMLSelectElement
+          | null;
+        const visible = !!field && field.value === expected;
+
+        block.hidden = !visible;
+
+        block
+          .querySelectorAll<
+            HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+          >("input, select, textarea")
+          .forEach((input) => {
+            if (input.dataset.requireWhenShown !== undefined) {
+              input.required = visible;
+            }
+            if (!visible) input.value = "";
+            input.disabled = !visible;
+          });
+      });
+    }
+
+    form.addEventListener("change", syncConditionals);
+    syncConditionals();
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      if (!status || !submit) return;
+
+      const label = submit.textContent;
+      submit.disabled = true;
+      submit.textContent = "Sending…";
+      status.textContent = "";
+      delete status.dataset.state;
+
+      /*
+       * Drop blank optionals so the delivered email lists only what was
+       * actually filled in, and drop `redirect`, which exists purely for the
+       * no-JavaScript path.
+       */
+      const payload: Record<string, FormDataEntryValue> = {};
+      new FormData(form).forEach((value, key) => {
+        if (key === "redirect") return;
+        if (typeof value === "string" && value.trim() === "") return;
+        payload[key] = value;
+      });
+
+      try {
+        const response = await fetch(ENDPOINT, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify(payload),
+        });
+        const result = await response.json();
+
+        if (!response.ok || !result.success) {
+          throw new Error(result.message ?? "Submission failed");
+        }
+
+        form.reset();
+        syncConditionals();
+        status.dataset.state = "ok";
+        status.textContent =
+          form.dataset.success ?? "Thank you — we will be in touch shortly.";
+      } catch {
+        /*
+         * Built as DOM nodes rather than innerHTML. The values are our own
+         * constants, but a form's error path should never be the one place
+         * that can inject markup.
+         */
+        const email = form.dataset.fallbackEmail ?? "";
+        const phone = form.dataset.fallbackPhone ?? "";
+        const link = document.createElement("a");
+        link.href = `mailto:${email}`;
+        link.className = "link";
+        link.textContent = email;
+
+        status.dataset.state = "error";
+        status.textContent = "That did not send. Please email ";
+        status.append(link, ` or call ${phone} and we will pick it up there.`);
+      } finally {
+        submit.disabled = false;
+        submit.textContent = label;
+      }
+    });
+  });
+</script>

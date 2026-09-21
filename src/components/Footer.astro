@@ -23,7 +23,8 @@ const year = new Date().getFullYear();
           <span class="text-lg font-medium tracking-tight text-paper">{SITE.name}</span>
         </div>
         <p class="mt-4 text-sm leading-relaxed text-[#a9b6c7]">
-          {SITE.tagline} Built by {SITE.legalName}.
+          {SITE.brandName} buys, improves, and operates small multifamily
+          properties across the United States.
         </p>
       </div>
 
@@ -72,6 +73,14 @@ const year = new Date().getFullYear();
               class="text-[#cdd7e3] transition-colors hover:text-paper"
             >
               {SITE.email}
+            </a>
+          </li>
+          <li>
+            <a
+              href={`tel:${SITE.phone}`}
+              class="text-[#cdd7e3] transition-colors hover:text-paper"
+            >
+              {SITE.phoneDisplay}
             </a>
           </li>
         </ul>

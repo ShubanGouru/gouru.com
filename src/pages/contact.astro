@@ -1,13 +1,17 @@
 ---
 import Base from "../layouts/Base.astro";
+import FormShell from "../components/form/FormShell.astro";
+import Field from "../components/form/Field.astro";
+import Select from "../components/form/Select.astro";
+import Textarea from "../components/form/Textarea.astro";
 import { SITE } from "../consts";
 ---
 
 <Base
   title="Contact"
-  description={`Get in touch with ${SITE.legalName}. Email us at ${SITE.email}.`}
+  description={`Get in touch with ${SITE.brandName}. Email ${SITE.email} or call ${SITE.phoneDisplay}.`}
 >
-  <section class="wrap pt-16 pb-24 md:pt-24 md:pb-32">
+  <section class="wrap pt-16 pb-20 md:pt-24 md:pb-28">
     <div class="grid gap-12 md:grid-cols-[0.9fr_1.1fr] md:gap-16">
       <div>
         <p class="eyebrow">Contact</p>
@@ -15,22 +19,11 @@ import { SITE } from "../consts";
           Let's talk.
         </h1>
         <p class="lead mt-7 max-w-md">
-          For general questions, partnerships, or press, email us directly. We
-          read everything that comes in and aim to reply thoughtfully.
+          One inbox and one phone number, both read and answered by the people
+          who actually do the work.
         </p>
-      </div>
 
-      <div class="md:pt-4">
-        <dl class="space-y-10">
-          <div class="border-t border-line-strong pt-5">
-            <dt class="text-sm font-medium uppercase tracking-[0.16em] text-muted">
-              Company
-            </dt>
-            <dd class="mt-2 text-xl font-medium text-navy md:text-2xl">
-              {SITE.legalName}
-            </dd>
-          </div>
-
+        <dl class="mt-12 space-y-8">
           <div class="border-t border-line-strong pt-5">
             <dt class="text-sm font-medium uppercase tracking-[0.16em] text-muted">
               Email
@@ -38,18 +31,63 @@ import { SITE } from "../consts";
             <dd class="mt-2">
               <a
                 href={`mailto:${SITE.email}`}
-                class="display text-3xl text-navy underline decoration-line-strong decoration-1 underline-offset-[6px] transition-colors hover:decoration-navy md:text-4xl"
+                class="display text-2xl text-navy underline decoration-line-strong decoration-1 underline-offset-[6px] transition-colors hover:decoration-navy md:text-3xl"
               >
                 {SITE.email}
               </a>
             </dd>
           </div>
+
+          <div class="border-t border-line-strong pt-5">
+            <dt class="text-sm font-medium uppercase tracking-[0.16em] text-muted">
+              Phone
+            </dt>
+            <dd class="mt-2">
+              <a
+                href={`tel:${SITE.phone}`}
+                class="display text-2xl text-navy underline decoration-line-strong decoration-1 underline-offset-[6px] transition-colors hover:decoration-navy md:text-3xl"
+              >
+                {SITE.phoneDisplay}
+              </a>
+            </dd>
+          </div>
         </dl>
 
-        <p class="mt-12 max-w-md text-sm leading-relaxed text-muted">
-          We keep this simple on purpose — one inbox, read by real people. The
-          fastest way to reach {SITE.name} is the address above.
+        <p class="mt-10 max-w-md text-sm leading-relaxed text-muted">
+          Have a property to sell? The
+          <a href="/sell/" class="link">seller form</a> asks the right questions
+          and gets you an answer faster. Looking to invest? Start on the
+          <a href="/invest/" class="link">investor page</a>.
         </p>
+      </div>
+
+      <div class="card md:p-9">
+        <FormShell
+          subject="New contact form message — gouru.com"
+          submitLabel="Send message"
+          successMessage="Thank you — your message is in and we will get back to you shortly."
+        >
+          <div class="grid gap-5 sm:grid-cols-2">
+            <Field label="Name" name="name" required autocomplete="name" />
+            <Field label="Phone" name="phone" type="tel" autocomplete="tel" />
+          </div>
+
+          <Field label="Email" name="email" type="email" required autocomplete="email" />
+
+          <Select
+            label="What is this about?"
+            name="reason"
+            placeholder="Select one"
+            options={[
+              "Selling a property",
+              "Investing with you",
+              "Brokerage or referral",
+              "Something else",
+            ]}
+          />
+
+          <Textarea label="Message" name="message" required />
+        </FormShell>
       </div>
     </div>
   </section>

@@ -11,9 +11,11 @@ interface Props {
   description: string;
   /** Optional: render the title verbatim without the brand suffix. */
   rawTitle?: boolean;
+  /** Keep this page out of search results. */
+  noindex?: boolean;
 }
 
-const { title, description, rawTitle = false } = Astro.props;
+const { title, description, rawTitle = false, noindex = false } = Astro.props;
 
 const fullTitle = rawTitle ? title : `${title} — ${SITE.name}`;
 const canonical = new URL(Astro.url.pathname, SITE.url).href;
@@ -29,6 +31,7 @@ const ogImage = new URL("/og-image.png", SITE.url).href;
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex, follow" />}
 
     <!-- Icons -->
     <link rel="icon" href="/favicon.ico" sizes="any" />

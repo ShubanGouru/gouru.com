@@ -1,0 +1,278 @@
+---
+import Base from "../layouts/Base.astro";
+import FormShell from "../components/form/FormShell.astro";
+import Field from "../components/form/Field.astro";
+import Select from "../components/form/Select.astro";
+import Textarea from "../components/form/Textarea.astro";
+import { SITE, BUY_BOX, NOT_A_FIT } from "../consts";
+
+/**
+ * Framed as situations owners are in rather than problems we tell them they
+ * have. An owner who recognizes their own circumstance in one line will keep
+ * reading; one who feels diagnosed will not.
+ */
+const situations = [
+  {
+    title: "The building needs work you would rather not fund",
+    body: "A roof, the HVAC, plumbing you have been nursing along. Real money, on someone else's timeline.",
+  },
+  {
+    title: "Managing it has become a second job",
+    body: "Turnovers, late rent, the maintenance call that lands at eleven at night. The income stopped being passive a while ago.",
+  },
+  {
+    title: "Rents are under market and closing the gap means renovations",
+    body: "You know what the units could earn. Getting there means turns, contractors, and vacancy you would have to carry.",
+  },
+  {
+    title: "Your management company is not performing",
+    body: "Replacing them is its own project, and the one you have is quietly costing you more than their fee.",
+  },
+  {
+    title: "The partnership, the estate, or the plan has changed",
+    body: "A partner wants out, a property came through an estate, or retirement is closer than it was. The asset no longer fits.",
+  },
+  {
+    title: "You want to be done without the listing process",
+    body: "Photos, showings, strangers walking your units, ninety days, and a buyer who renegotiates in week eight.",
+  },
+];
+
+const steps = [
+  {
+    number: "01",
+    title: "Tell us about the property",
+    body: "The form below or a phone call, whichever you prefer. No listing packet, no professional photos, nothing cleaned up first.",
+  },
+  {
+    number: "02",
+    title: "We underwrite it ourselves",
+    body: "We run the numbers in house and come back with a real number, plus how we arrived at it. If it is not a fit, we will tell you that plainly instead of going quiet.",
+  },
+  {
+    number: "03",
+    title: "Straightforward diligence",
+    body: "We inspect, review the leases, and confirm what we were told. We stand behind our number and do not reopen it unless diligence turns up something material that was not disclosed.",
+  },
+  {
+    number: "04",
+    title: "Close on your schedule",
+    body: "Typically 30 to 60 days. Faster when you need speed, slower when you need time to settle an estate or relocate.",
+  },
+];
+---
+
+<Base
+  title="Sell to Us"
+  description="Sell your 5-40 unit multifamily property directly to Gouru Capital Partners. No listing, no showings, no repairs before closing."
+>
+  <!-- Hero -->
+  <section class="wrap pt-16 pb-12 md:pt-24 md:pb-16">
+    <p class="eyebrow">Sell to us</p>
+    <h1 class="display mt-6 max-w-4xl text-[clamp(2.5rem,5vw+1rem,4.75rem)]">
+      Sell your building without the listing process.
+    </h1>
+    <p class="lead mt-7 max-w-2xl">
+      We buy 5&ndash;40 unit multifamily directly from owners. No agent, no
+      showings, no repairs asked of you before closing, and no month of silence
+      wondering where things stand.
+    </p>
+    <div class="mt-9 flex flex-wrap items-center gap-3">
+      <a href="#seller-form" class="btn btn-primary">Tell us about your property</a>
+      <a href={`tel:${SITE.phone}`} class="btn btn-ghost">
+        Call {SITE.phoneDisplay}
+      </a>
+    </div>
+  </section>
+
+  <!-- Situations -->
+  <section class="wrap py-14 md:py-20">
+    <p class="eyebrow">Why owners call us</p>
+    <h2 class="display mt-6 max-w-3xl text-3xl md:text-[2.75rem]">
+      Most owners we talk to are not in trouble. The property just stopped
+      being worth the trouble.
+    </h2>
+    <div class="mt-12 grid gap-x-10 gap-y-9 md:grid-cols-2 lg:grid-cols-3">
+      {
+        situations.map((situation) => (
+          <div class="border-t border-line pt-5">
+            <h3 class="text-lg font-medium leading-snug">{situation.title}</h3>
+            <p class="mt-2.5 text-body">{situation.body}</p>
+          </div>
+        ))
+      }
+    </div>
+    <p class="mt-12 max-w-2xl text-body">
+      If any of that sounds like your situation, a conversation costs you
+      nothing and commits you to nothing. We will give you a straight answer on
+      whether we are the right buyer.
+    </p>
+  </section>
+
+  <!-- How it works -->
+  <section class="wrap py-14 md:py-20">
+    <p class="eyebrow">How it works</p>
+    <h2 class="display mt-6 max-w-2xl text-3xl md:text-[2.75rem]">
+      Four steps, and you can stop at any of them.
+    </h2>
+    <div class="mt-12 grid gap-10 md:grid-cols-2 md:gap-x-12 md:gap-y-12">
+      {
+        steps.map((step) => (
+          <div class="flex gap-5">
+            <p class="font-display text-3xl leading-none text-navy-500">
+              {step.number}
+            </p>
+            <div>
+              <h3 class="text-xl font-medium">{step.title}</h3>
+              <p class="mt-2.5 text-body">{step.body}</p>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- Buy box -->
+  <section class="wrap py-14 md:py-20">
+    <div class="rounded-3xl bg-navy px-6 py-12 text-paper md:px-12 md:py-16">
+      <p class="eyebrow !text-[#8fb0d4]">Our buy box</p>
+      <h2 class="display mt-5 max-w-2xl text-3xl text-paper md:text-4xl">
+        Exactly what we are looking for.
+      </h2>
+      <p class="mt-5 max-w-2xl text-[#c4d2e2]">
+        Published so brokers and owners can qualify us in or out in a few
+        seconds instead of a few emails.
+      </p>
+
+      <dl class="mt-12 grid gap-10 sm:grid-cols-2">
+        {
+          BUY_BOX.map((item) => (
+            <div class="border-t border-white/15 pt-5">
+              <dt class="text-xs font-medium uppercase tracking-[0.18em] text-[#8fb0d4]">
+                {item.label}
+              </dt>
+              <dd class="mt-2 text-2xl font-medium text-paper">{item.value}</dd>
+              <dd class="mt-2 text-sm leading-relaxed text-[#a9b6c7]">
+                {item.note}
+              </dd>
+            </div>
+          ))
+        }
+      </dl>
+
+      <div class="mt-12 border-t border-white/15 pt-8">
+        <h3 class="text-xs font-medium uppercase tracking-[0.18em] text-[#8fb0d4]">
+          What we pass on
+        </h3>
+        <ul class="mt-4 grid gap-2.5 text-[#c4d2e2] md:grid-cols-3 md:gap-6">
+          {
+            NOT_A_FIT.map((item) => (
+              <li class="flex gap-2.5">
+                <span aria-hidden="true" class="text-[#8fb0d4]">&mdash;</span>
+                <span>{item}</span>
+              </li>
+            ))
+          }
+        </ul>
+        <p class="mt-6 max-w-2xl text-sm text-[#a9b6c7]">
+          Close but not exact? Send it anyway. The edges of a buy box are
+          judgment calls, and we would rather look than guess.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Form -->
+  <section id="seller-form" class="wrap scroll-mt-8 py-14 md:py-20">
+    <div class="grid gap-12 md:grid-cols-[0.85fr_1.15fr] md:gap-16">
+      <div>
+        <p class="eyebrow">Tell us about it</p>
+        <h2 class="display mt-6 text-3xl md:text-[2.5rem]">
+          Start with the basics.
+        </h2>
+        <p class="mt-5 text-body">
+          Five fields and a couple of minutes. We read every submission
+          ourselves and reply either way, including when the answer is no.
+        </p>
+
+        <dl class="mt-10 space-y-6">
+          <div class="border-t border-line-strong pt-4">
+            <dt class="text-xs font-medium uppercase tracking-[0.16em] text-muted">
+              Prefer to call
+            </dt>
+            <dd class="mt-1.5">
+              <a href={`tel:${SITE.phone}`} class="text-xl font-medium text-navy">
+                {SITE.phoneDisplay}
+              </a>
+            </dd>
+          </div>
+          <div class="border-t border-line-strong pt-4">
+            <dt class="text-xs font-medium uppercase tracking-[0.16em] text-muted">
+              Prefer email
+            </dt>
+            <dd class="mt-1.5">
+              <a href={`mailto:${SITE.email}`} class="text-xl font-medium text-navy">
+                {SITE.email}
+              </a>
+            </dd>
+          </div>
+        </dl>
+      </div>
+
+      <div class="card md:p-9">
+        <FormShell
+          subject="New seller inquiry — gouru.com"
+          submitLabel="Send property details"
+          successMessage="Thank you — we have your property details and will review them ourselves. Expect to hear back from us shortly, either way."
+        >
+          <div class="grid gap-5 sm:grid-cols-2">
+            <Field label="Name" name="name" required autocomplete="name" />
+            <Field label="Phone" name="phone" type="tel" required autocomplete="tel" />
+          </div>
+
+          <Field label="Email" name="email" type="email" required autocomplete="email" />
+
+          <div class="grid gap-5 sm:grid-cols-2">
+            <Field
+              label="Property location"
+              name="property_location"
+              required
+              placeholder="City, State"
+            />
+            <Field
+              label="Number of units"
+              name="units"
+              required
+              hint="Approximate is fine, or list them if it is a portfolio."
+            />
+          </div>
+
+          <Field
+            label="Price expectation"
+            name="price_expectation"
+            hint="Only if you have a number in mind. Leave it blank and we will lead."
+          />
+
+          <Select
+            label="Timeline"
+            name="timeline"
+            placeholder="When would you want to close?"
+            options={[
+              "As soon as possible",
+              "1-3 months",
+              "3-6 months",
+              "6+ months",
+              "Just exploring for now",
+            ]}
+          />
+
+          <Textarea
+            label="Anything we should know"
+            name="notes"
+            placeholder="Occupancy, recent capital work, why you are selling, anything that would not show up in the numbers."
+          />
+        </FormShell>
+      </div>
+    </div>
+  </section>
+</Base>

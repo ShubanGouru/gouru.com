@@ -269,3 +269,119 @@
     }
   }
 }
+
+/* ---------------------------------------------------------------------------
+   Forms.
+
+   Inputs sit on the warm paper background, so they use a plain white fill to
+   read as "enter something here" without needing heavy borders.
+--------------------------------------------------------------------------- */
+@layer components {
+  .field-label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-ink);
+    margin-bottom: 0.4rem;
+  }
+
+  /* The required marker is decorative; the `required` attribute is what
+     actually conveys the requirement to assistive tech. */
+  .field-req {
+    color: var(--color-navy-500);
+    margin-left: 0.15rem;
+  }
+
+  .input,
+  .textarea,
+  .select {
+    width: 100%;
+    background-color: #ffffff;
+    border: 1px solid var(--color-line-strong);
+    border-radius: 0.7rem;
+    padding: 0.72rem 0.9rem;
+    font-family: inherit;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: var(--color-ink);
+    transition: border-color 0.18s ease, box-shadow 0.18s ease;
+  }
+
+  .input::placeholder,
+  .textarea::placeholder {
+    color: #9aa2ab;
+  }
+
+  .input:hover,
+  .textarea:hover,
+  .select:hover {
+    border-color: var(--color-navy-500);
+  }
+
+  .input:focus,
+  .textarea:focus,
+  .select:focus {
+    outline: none;
+    border-color: var(--color-navy);
+    box-shadow: 0 0 0 3px rgba(7, 37, 71, 0.09);
+  }
+
+  .textarea {
+    min-height: 7.5rem;
+    resize: vertical;
+  }
+
+  /* Native select arrows differ per platform and clash with the type. Replace
+     with our own chevron; the arrow is inlined so it costs no extra request. */
+  .select {
+    appearance: none;
+    padding-right: 2.5rem;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%231f5285' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 6.5 8 10.5 12 6.5'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.85rem center;
+    background-size: 1rem;
+  }
+
+  .field-hint {
+    margin-top: 0.4rem;
+    font-size: 0.8rem;
+    line-height: 1.5;
+    color: var(--color-muted);
+  }
+
+  /* Conditional fields start hidden and are revealed by the form script. */
+  .conditional[hidden] {
+    display: none;
+  }
+  .conditional {
+    animation: reveal 0.35s cubic-bezier(0.2, 0.65, 0.3, 1) forwards;
+  }
+
+  /* Submission feedback. Empty by default so it takes no vertical space. */
+  .form-status:empty {
+    display: none;
+  }
+  .form-status {
+    margin-top: 1rem;
+    border-radius: 0.7rem;
+    padding: 0.85rem 1rem;
+    font-size: 0.9rem;
+    line-height: 1.55;
+  }
+  .form-status[data-state="ok"] {
+    background-color: #eaf2ea;
+    color: #1f4d2c;
+  }
+  .form-status[data-state="error"] {
+    background-color: #f8ecea;
+    color: #7a2e22;
+  }
+
+  /* Bordered content block, used for buy-box rows, FAQ items, and cards. */
+  .card {
+    border: 1px solid var(--color-line);
+    border-radius: 1.25rem;
+    background-color: #fffdf8;
+    padding: 1.6rem;
+  }
+}

@@ -1,0 +1,56 @@
+---
+/**
+ * A labelled single-line input.
+ *
+ * The visible asterisk is decorative and hidden from assistive tech — the
+ * `required` attribute is what actually communicates the requirement.
+ */
+interface Props {
+  label: string;
+  name: string;
+  type?: "text" | "email" | "tel" | "number";
+  required?: boolean;
+  placeholder?: string;
+  hint?: string;
+  autocomplete?: string;
+  /**
+   * Marks the field as required only while its <Conditional> wrapper is
+   * visible. Never set `required` directly on a conditional field: a hidden
+   * field that is still required fails validation against an element the
+   * visitor cannot see, and the browser reports it with no way to fix it.
+   */
+  requireWhenShown?: boolean;
+}
+
+const {
+  label,
+  name,
+  type = "text",
+  required = false,
+  placeholder,
+  hint,
+  autocomplete,
+  requireWhenShown = false,
+} = Astro.props;
+
+const id = `field-${name}`;
+const hintId = hint ? `${id}-hint` : undefined;
+---
+
+<div>
+  <label class="field-label" for={id}>
+    {label}{required && <span class="field-req" aria-hidden="true">*</span>}
+  </label>
+  <input
+    class="input"
+    id={id}
+    name={name}
+    type={type}
+    required={required}
+    placeholder={placeholder}
+    autocomplete={autocomplete}
+    aria-describedby={hintId}
+    data-require-when-shown={requireWhenShown ? "" : undefined}
+  />
+  {hint && <p class="field-hint" id={hintId}>{hint}</p>}
+</div>

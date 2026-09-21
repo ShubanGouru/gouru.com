@@ -1,0 +1,38 @@
+---
+interface Props {
+  label: string;
+  name: string;
+  required?: boolean;
+  placeholder?: string;
+  hint?: string;
+  requireWhenShown?: boolean;
+}
+
+const {
+  label,
+  name,
+  required = false,
+  placeholder,
+  hint,
+  requireWhenShown = false,
+} = Astro.props;
+
+const id = `field-${name}`;
+const hintId = hint ? `${id}-hint` : undefined;
+---
+
+<div>
+  <label class="field-label" for={id}>
+    {label}{required && <span class="field-req" aria-hidden="true">*</span>}
+  </label>
+  <textarea
+    class="textarea"
+    id={id}
+    name={name}
+    required={required}
+    placeholder={placeholder}
+    aria-describedby={hintId}
+    data-require-when-shown={requireWhenShown ? "" : undefined}
+  ></textarea>
+  {hint && <p class="field-hint" id={hintId}>{hint}</p>}
+</div>
