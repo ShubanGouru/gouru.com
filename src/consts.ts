@@ -65,7 +65,7 @@ export const SITE = {
    * and hold it for a long time. Whenever public/og-image.png is redrawn,
    * bump this number or those platforms keep serving the old picture.
    */
-  ogVersion: "3",
+  ogVersion: "4",
 
   /** Date the legal pages were last reviewed. */
   legalUpdated: "September 21, 2026",

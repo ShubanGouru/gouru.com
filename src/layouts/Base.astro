@@ -17,7 +17,7 @@ interface Props {
 
 const { title, description, rawTitle = false, noindex = false } = Astro.props;
 
-const fullTitle = rawTitle ? title : `${title} — ${SITE.name}`;
+const fullTitle = rawTitle ? title : `${title} — ${SITE.brandName}`;
 const canonical = new URL(Astro.url.pathname, SITE.url).href;
 const ogImage = new URL(`/og-image.png?v=${SITE.ogVersion}`, SITE.url).href;
 ---
@@ -42,7 +42,7 @@ const ogImage = new URL(`/og-image.png?v=${SITE.ogVersion}`, SITE.url).href;
 
     <!-- Open Graph / Twitter -->
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content={SITE.name} />
+    <meta property="og:site_name" content={SITE.brandName} />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
