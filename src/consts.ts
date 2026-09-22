@@ -58,6 +58,15 @@ export const SITE = {
    */
   web3formsKey: "0b0b760e-0aee-4270-a3c2-8d8dfb68e9a8",
 
+  /**
+   * Cache-buster for the social preview image.
+   *
+   * iMessage, Slack, LinkedIn and the rest key their cache on the image URL
+   * and hold it for a long time. Whenever public/og-image.png is redrawn,
+   * bump this number or those platforms keep serving the old picture.
+   */
+  ogVersion: "2",
+
   /** Date the legal pages were last reviewed. */
   legalUpdated: "September 21, 2026",
 } as const;
