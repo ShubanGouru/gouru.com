@@ -62,9 +62,9 @@
   --color-line: #ddd2bf;
   --color-line-strong: #c9bca4;
 
-  --color-accent: #2f4f3e;
-  --color-accent-deep: #1f3729;
-  --color-accent-soft: #4a6b57;
+  --color-accent: #2d6a4a;
+  --color-accent-deep: #235539;
+  --color-accent-soft: #4f8a68;
 
   --font-sans: "Neue Montreal", ui-sans-serif, system-ui, -apple-system, sans-serif;
   --font-serif: "Spectral", Georgia, "Times New Roman", serif;
@@ -356,7 +356,7 @@
   .select:focus {
     outline: none;
     border-color: var(--color-accent);
-    box-shadow: 0 0 0 3px rgba(47, 79, 62, 0.12);
+    box-shadow: 0 0 0 3px rgba(45, 106, 74, 0.16);
   }
 
   .textarea {
@@ -367,7 +367,7 @@
   .select {
     appearance: none;
     padding-right: 2.5rem;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%232f4f3e' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 6.5 8 10.5 12 6.5'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%232d6a4a' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 6.5 8 10.5 12 6.5'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: right 0.85rem center;
     background-size: 1rem;
