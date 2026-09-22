@@ -1,10 +1,37 @@
 @import "tailwindcss";
 
 /* ---------------------------------------------------------------------------
-   Brand typefaces — self-hosted (no third-party requests).
-   Giaza: high-contrast editorial serif, used only for display headlines.
-   Neue Montreal: refined grotesque, used for everything else.
+   Brand typefaces — self-hosted, so the site makes no third-party requests.
+
+   Spectral: a text serif with newspaper lineage. It carries the headlines AND
+   the body copy. Deliberately not a high-contrast display serif — that look
+   is what made the previous design read as generic.
+
+   Neue Montreal: carries everything structural — nav, labels, buttons, form
+   fields. The split is the point: serif for what you read, sans for what you
+   operate.
 --------------------------------------------------------------------------- */
+@font-face {
+  font-family: "Spectral";
+  src: url("/fonts/spectral-regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Spectral";
+  src: url("/fonts/spectral-italic.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Spectral";
+  src: url("/fonts/spectral-semibold.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
 @font-face {
   font-family: "Neue Montreal";
   src: url("/fonts/neue-montreal-regular.woff2") format("woff2");
@@ -19,42 +46,29 @@
   font-style: normal;
   font-display: swap;
 }
-@font-face {
-  font-family: "Neue Montreal";
-  src: url("/fonts/neue-montreal-bold.woff2") format("woff2");
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Giaza";
-  src: url("/fonts/giaza.woff2") format("woff2");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
 
 /* ---------------------------------------------------------------------------
-   Design tokens. Tailwind v4 reads these to generate utilities such as
-   bg-paper, text-navy, border-line, font-display, etc.
-   Palette: one brand color (navy, sampled from the logo) + warm neutrals.
+   Design tokens.
+
+   Warm bone paper, near-black brown ink, and one accent: a deep olive green
+   that reads as money rather than as a tech brand.
 --------------------------------------------------------------------------- */
 @theme {
-  --color-paper: #f8f6f0;
-  --color-paper-deep: #f1ebdf;
-  --color-navy: #072547;
-  --color-navy-700: #0c3461;
-  --color-navy-500: #1f5285;
-  --color-ink: #1b2733;
-  --color-body: #38434f;
-  --color-muted: #5b636d;
-  --color-line: #e3ddd0;
-  --color-line-strong: #d6cfbf;
+  --color-paper: #f6f1e7;
+  --color-paper-deep: #efe7d7;
+  --color-ink: #211c16;
+  --color-body: #4e463c;
+  --color-muted: #6b6053;
+  --color-line: #ddd2bf;
+  --color-line-strong: #c9bca4;
+
+  --color-accent: #2f4f3e;
+  --color-accent-deep: #1f3729;
+  --color-accent-soft: #4a6b57;
 
   --font-sans: "Neue Montreal", ui-sans-serif, system-ui, -apple-system, sans-serif;
-  --font-display: "Giaza", Georgia, "Times New Roman", serif;
-
-  --shadow-soft: 0 1px 2px rgba(7, 37, 71, 0.04), 0 12px 32px -16px rgba(7, 37, 71, 0.18);
+  --font-serif: "Spectral", Georgia, "Times New Roman", serif;
+  --font-display: "Spectral", Georgia, "Times New Roman", serif;
 }
 
 /* ---------------------------------------------------------------------------
@@ -66,24 +80,27 @@
     -webkit-text-size-adjust: 100%;
   }
 
+  /* Spectral is the reading face, so it is the body default. Sans is opt-in. */
   body {
     background-color: var(--color-paper);
     color: var(--color-body);
-    font-family: var(--font-sans);
+    font-family: var(--font-serif);
     font-weight: 400;
-    line-height: 1.65;
+    font-size: 1.0625rem;
+    line-height: 1.62;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
   }
 
   h1, h2, h3, h4 {
-    color: var(--color-navy);
+    color: var(--color-ink);
+    font-weight: 400;
     text-wrap: balance;
   }
 
   ::selection {
-    background-color: var(--color-navy);
+    background-color: var(--color-accent);
     color: var(--color-paper);
   }
 
@@ -91,11 +108,10 @@
     color: inherit;
   }
 
-  /* Visible, on-brand keyboard focus everywhere. */
   :focus-visible {
-    outline: 2px solid var(--color-navy);
+    outline: 2px solid var(--color-accent);
     outline-offset: 3px;
-    border-radius: 2px;
+    border-radius: 1px;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -109,37 +125,40 @@
 }
 
 /* ---------------------------------------------------------------------------
-   Components — kept deliberately small and semantic.
+   Components
 --------------------------------------------------------------------------- */
 @layer components {
-  /* Centered content column with fluid gutters. */
   .wrap {
     width: 100%;
-    max-width: 72rem;
+    max-width: 76rem;
     margin-inline: auto;
-    padding-inline: clamp(1.25rem, 5vw, 2.5rem);
+    padding-inline: clamp(1.25rem, 4vw, 3.5rem);
   }
   .wrap-narrow {
     max-width: 46rem;
   }
 
-  /* Small uppercase label that sits above headings. */
+  /* Structural type — nav, labels, buttons, fields. */
+  .ui {
+    font-family: var(--font-sans);
+  }
+
+  /*
+    Small uppercase label above a heading. No leading dash rule here: the
+    dash-before-eyebrow is one of the tells that made the old design read as
+    machine-made.
+  */
   .eyebrow {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.6rem;
+    display: block;
+    font-family: var(--font-sans);
     font-size: 0.75rem;
     font-weight: 500;
-    letter-spacing: 0.18em;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: var(--color-navy-500);
+    color: var(--color-accent);
   }
-  .eyebrow::before {
-    content: "";
-    width: 1.6rem;
-    height: 1px;
-    background-color: var(--color-navy-500);
-    opacity: 0.6;
+  .eyebrow-muted {
+    color: var(--color-muted);
   }
 
   /* Editorial display headline. */
@@ -147,81 +166,97 @@
     font-family: var(--font-display);
     font-weight: 400;
     line-height: 1.02;
-    letter-spacing: -0.01em;
-    color: var(--color-navy);
-  }
-
-  /* Larger introductory paragraph. */
-  .lead {
-    font-size: clamp(1.1rem, 0.95rem + 0.7vw, 1.375rem);
-    line-height: 1.55;
+    letter-spacing: -0.022em;
     color: var(--color-ink);
   }
+  .display em {
+    font-style: italic;
+  }
 
-  /* Buttons */
+  .lead {
+    font-size: clamp(1.1rem, 0.95rem + 0.55vw, 1.25rem);
+    line-height: 1.6;
+    color: var(--color-body);
+  }
+
+  /*
+    Buttons are square. Pills read as software; this is a firm that buys
+    buildings. Sized past a 44px touch target at every breakpoint.
+  */
   .btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 0.55rem;
-    padding: 0.85rem 1.5rem;
-    font-size: 0.95rem;
+    gap: 0.5rem;
+    font-family: var(--font-sans);
+    padding: 1.125rem 2rem;
+    font-size: 1rem;
     font-weight: 500;
+    letter-spacing: 0.02em;
     line-height: 1;
-    border-radius: 999px;
-    transition: transform 0.2s ease, background-color 0.2s ease,
-      color 0.2s ease, border-color 0.2s ease;
-    will-change: transform;
-  }
-  .btn:hover {
-    transform: translateY(-1px);
+    border-radius: 0;
+    transition: background-color 0.18s ease, color 0.18s ease,
+      border-color 0.18s ease;
   }
   .btn-primary {
-    background-color: var(--color-navy);
+    background-color: var(--color-accent);
     color: var(--color-paper);
   }
   .btn-primary:hover {
-    background-color: var(--color-navy-700);
+    background-color: var(--color-accent-deep);
   }
   .btn-ghost {
     border: 1px solid var(--color-line-strong);
-    color: var(--color-navy);
+    color: var(--color-ink);
   }
   .btn-ghost:hover {
-    border-color: var(--color-navy);
+    border-color: var(--color-ink);
+  }
+  /* Outlined in the accent — used for the section-level calls to action. */
+  .btn-outline {
+    border: 1px solid var(--color-accent);
+    color: var(--color-accent);
+    padding: 1rem 1.875rem;
+  }
+  .btn-outline:hover {
+    background-color: var(--color-accent);
+    color: var(--color-paper);
+  }
+  .btn-sm {
+    padding: 0.85rem 1.5rem;
+    font-size: 0.9375rem;
   }
 
-  /* Underline-on-hover text link. */
   .link {
-    color: var(--color-navy);
+    color: var(--color-accent);
     text-decoration: underline;
     text-decoration-color: var(--color-line-strong);
-    text-underline-offset: 0.22em;
+    text-underline-offset: 0.2em;
     text-decoration-thickness: 1px;
     transition: text-decoration-color 0.2s ease;
   }
   .link:hover {
-    text-decoration-color: var(--color-navy);
+    text-decoration-color: var(--color-accent);
   }
 
-  /* Hairline used to separate sections. */
   .rule {
     border: 0;
     border-top: 1px solid var(--color-line);
   }
 
-  /* Readable long-form column for legal pages. */
+  /* Long-form column for legal pages. */
   .legal {
     color: var(--color-body);
   }
   .legal h2 {
     font-family: var(--font-display);
-    font-size: clamp(1.35rem, 1.1rem + 1vw, 1.75rem);
+    font-size: clamp(1.4rem, 1.1rem + 1vw, 1.8rem);
     margin-top: 2.75rem;
     margin-bottom: 0.75rem;
   }
   .legal h3 {
-    font-size: 1.05rem;
+    font-family: var(--font-sans);
+    font-size: 1rem;
     font-weight: 500;
     color: var(--color-ink);
     margin-top: 1.75rem;
@@ -244,23 +279,21 @@
     content: "";
     position: absolute;
     left: 0;
-    top: 0.68em;
+    top: 0.72em;
     width: 5px;
     height: 5px;
-    border-radius: 999px;
-    background-color: var(--color-navy-500);
+    background-color: var(--color-accent);
   }
   .legal a {
-    color: var(--color-navy);
+    color: var(--color-accent);
     text-decoration: underline;
     text-underline-offset: 0.18em;
   }
 
-  /* Entrance animation — staggered, and disabled for reduced motion. */
   .reveal {
     opacity: 0;
-    transform: translateY(14px);
-    animation: reveal 0.7s cubic-bezier(0.2, 0.65, 0.3, 1) forwards;
+    transform: translateY(12px);
+    animation: reveal 0.65s cubic-bezier(0.2, 0.65, 0.3, 1) forwards;
   }
   @keyframes reveal {
     to {
@@ -273,22 +306,22 @@
 /* ---------------------------------------------------------------------------
    Forms.
 
-   Inputs sit on the warm paper background, so they use a plain white fill to
-   read as "enter something here" without needing heavy borders.
+   Fields are sans — you operate them, you do not read them — on a plain white
+   fill so they stand off the bone paper without heavy borders.
 --------------------------------------------------------------------------- */
 @layer components {
   .field-label {
     display: block;
-    font-size: 0.875rem;
+    font-family: var(--font-sans);
+    font-size: 0.8125rem;
     font-weight: 500;
+    letter-spacing: 0.02em;
     color: var(--color-ink);
     margin-bottom: 0.4rem;
   }
 
-  /* The required marker is decorative; the `required` attribute is what
-     actually conveys the requirement to assistive tech. */
   .field-req {
-    color: var(--color-navy-500);
+    color: var(--color-accent);
     margin-left: 0.15rem;
   }
 
@@ -296,11 +329,11 @@
   .textarea,
   .select {
     width: 100%;
-    background-color: #ffffff;
+    background-color: #fffdf8;
     border: 1px solid var(--color-line-strong);
-    border-radius: 0.7rem;
-    padding: 0.72rem 0.9rem;
-    font-family: inherit;
+    border-radius: 2px;
+    padding: 0.8rem 0.9rem;
+    font-family: var(--font-sans);
     font-size: 0.95rem;
     line-height: 1.5;
     color: var(--color-ink);
@@ -309,21 +342,21 @@
 
   .input::placeholder,
   .textarea::placeholder {
-    color: #9aa2ab;
+    color: #a09684;
   }
 
   .input:hover,
   .textarea:hover,
   .select:hover {
-    border-color: var(--color-navy-500);
+    border-color: var(--color-accent-soft);
   }
 
   .input:focus,
   .textarea:focus,
   .select:focus {
     outline: none;
-    border-color: var(--color-navy);
-    box-shadow: 0 0 0 3px rgba(7, 37, 71, 0.09);
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 3px rgba(47, 79, 62, 0.12);
   }
 
   .textarea {
@@ -331,12 +364,10 @@
     resize: vertical;
   }
 
-  /* Native select arrows differ per platform and clash with the type. Replace
-     with our own chevron; the arrow is inlined so it costs no extra request. */
   .select {
     appearance: none;
     padding-right: 2.5rem;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%231f5285' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 6.5 8 10.5 12 6.5'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%232f4f3e' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 6.5 8 10.5 12 6.5'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: right 0.85rem center;
     background-size: 1rem;
@@ -344,12 +375,12 @@
 
   .field-hint {
     margin-top: 0.4rem;
+    font-family: var(--font-sans);
     font-size: 0.8rem;
     line-height: 1.5;
     color: var(--color-muted);
   }
 
-  /* Conditional fields start hidden and are revealed by the form script. */
   .conditional[hidden] {
     display: none;
   }
@@ -357,31 +388,41 @@
     animation: reveal 0.35s cubic-bezier(0.2, 0.65, 0.3, 1) forwards;
   }
 
-  /* Submission feedback. Empty by default so it takes no vertical space. */
   .form-status:empty {
     display: none;
   }
   .form-status {
     margin-top: 1rem;
-    border-radius: 0.7rem;
+    border-radius: 2px;
     padding: 0.85rem 1rem;
+    font-family: var(--font-sans);
     font-size: 0.9rem;
     line-height: 1.55;
   }
   .form-status[data-state="ok"] {
-    background-color: #eaf2ea;
-    color: #1f4d2c;
+    background-color: #e6eee6;
+    color: #24462f;
   }
   .form-status[data-state="error"] {
-    background-color: #f8ecea;
-    color: #7a2e22;
+    background-color: #f4e7e2;
+    color: #6f2f20;
   }
 
-  /* Bordered content block, used for buy-box rows, FAQ items, and cards. */
+  /* Bordered block. Square, hairline — not a soft card. */
   .card {
     border: 1px solid var(--color-line);
-    border-radius: 1.25rem;
     background-color: #fffdf8;
-    padding: 1.6rem;
+    padding: 1.75rem;
+  }
+
+  /*
+    A labelled row in a printed-schedule list: label in sans on the left,
+    value in the serif on the right, hairline between rows.
+  */
+  .schedule {
+    border-top: 1px solid var(--color-line);
+  }
+  .schedule > * {
+    border-bottom: 1px solid var(--color-line);
   }
 }

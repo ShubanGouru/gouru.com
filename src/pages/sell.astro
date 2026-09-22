@@ -8,8 +8,8 @@ import { SITE, BUY_BOX, NOT_A_FIT } from "../consts";
 
 /**
  * Framed as situations owners are in rather than problems we tell them they
- * have. An owner who recognizes their own circumstance in one line will keep
- * reading; one who feels diagnosed will not.
+ * have. An owner who recognizes their own circumstance will keep reading; one
+ * who feels diagnosed will not.
  */
 const situations = [
   {
@@ -40,22 +40,22 @@ const situations = [
 
 const steps = [
   {
-    number: "01",
+    number: "I",
     title: "Tell us about the property",
     body: "The form below or a phone call, whichever you prefer. No listing packet, no professional photos, nothing cleaned up first.",
   },
   {
-    number: "02",
+    number: "II",
     title: "We underwrite it ourselves",
     body: "We run the numbers in house and come back with a real number, plus how we arrived at it. If it is not a fit, we will tell you that plainly instead of going quiet.",
   },
   {
-    number: "03",
+    number: "III",
     title: "Straightforward diligence",
     body: "We inspect, review the leases, and confirm what we were told. We stand behind our number and do not reopen it unless diligence turns up something material that was not disclosed.",
   },
   {
-    number: "04",
+    number: "IV",
     title: "Close on your schedule",
     body: "Typically 30 to 60 days. Faster when you need speed, slower when you need time to settle an estate or relocate.",
   },
@@ -67,17 +67,17 @@ const steps = [
   description="Sell your 5-40 unit multifamily property directly to Gouru Capital Partners. No listing, no showings, no repairs before closing."
 >
   <!-- Hero -->
-  <section class="wrap pt-16 pb-12 md:pt-24 md:pb-16">
+  <section class="wrap border-b border-line pt-16 pb-14 md:pt-20 md:pb-16">
     <p class="eyebrow">Sell to us</p>
-    <h1 class="display mt-6 max-w-4xl text-[clamp(2.5rem,5vw+1rem,4.75rem)]">
-      Sell your building without the listing process.
+    <h1 class="display mt-7 max-w-4xl text-[clamp(2.4rem,5vw+1rem,4.25rem)]">
+      Sell your building <em>without the listing process.</em>
     </h1>
-    <p class="lead mt-7 max-w-2xl">
+    <p class="lead mt-8 max-w-[43rem]">
       We buy 5&ndash;40 unit multifamily directly from owners. No agent, no
       showings, no repairs asked of you before closing, and no month of silence
       wondering where things stand.
     </p>
-    <div class="mt-9 flex flex-wrap items-center gap-3">
+    <div class="mt-10 flex flex-wrap items-center gap-3.5">
       <a href="#seller-form" class="btn btn-primary">Tell us about your property</a>
       <a href={`tel:${SITE.phone}`} class="btn btn-ghost">
         Call {SITE.phoneDisplay}
@@ -85,10 +85,28 @@ const steps = [
     </div>
   </section>
 
+  <!-- At a glance -->
+  <section class="wrap border-b border-line py-10 md:py-12">
+    <p class="eyebrow eyebrow-muted">At a glance</p>
+    <div class="mt-7 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+      {
+        BUY_BOX.map((item) => (
+          <div class="border-t border-line-strong pt-4">
+            <p class="ui text-xs font-medium uppercase tracking-[0.18em] text-muted">
+              {item.label}
+            </p>
+            <p class="mt-2 text-[1.35rem] leading-snug text-ink">{item.value}</p>
+            <p class="mt-2 text-sm leading-relaxed text-muted">{item.note}</p>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
   <!-- Situations -->
-  <section class="wrap py-14 md:py-20">
-    <p class="eyebrow">Why owners call us</p>
-    <h2 class="display mt-6 max-w-3xl text-3xl md:text-[2.75rem]">
+  <section class="wrap border-b border-line py-14 md:py-20">
+    <p class="eyebrow eyebrow-muted">Why owners call us</p>
+    <h2 class="display mt-6 max-w-3xl text-[clamp(1.9rem,2.6vw+1rem,2.75rem)]">
       Most owners we talk to are not in trouble. The property just stopped
       being worth the trouble.
     </h2>
@@ -96,7 +114,7 @@ const steps = [
       {
         situations.map((situation) => (
           <div class="border-t border-line pt-5">
-            <h3 class="text-lg font-medium leading-snug">{situation.title}</h3>
+            <h3 class="display text-xl leading-snug">{situation.title}</h3>
             <p class="mt-2.5 text-body">{situation.body}</p>
           </div>
         ))
@@ -110,20 +128,18 @@ const steps = [
   </section>
 
   <!-- How it works -->
-  <section class="wrap py-14 md:py-20">
-    <p class="eyebrow">How it works</p>
-    <h2 class="display mt-6 max-w-2xl text-3xl md:text-[2.75rem]">
+  <section class="wrap border-b border-line py-14 md:py-20">
+    <p class="eyebrow eyebrow-muted">How it works</p>
+    <h2 class="display mt-6 max-w-2xl text-[clamp(1.9rem,2.6vw+1rem,2.75rem)]">
       Four steps, and you can stop at any of them.
     </h2>
-    <div class="mt-12 grid gap-10 md:grid-cols-2 md:gap-x-12 md:gap-y-12">
+    <div class="mt-12 grid gap-10 md:grid-cols-2 md:gap-x-14 md:gap-y-12">
       {
         steps.map((step) => (
-          <div class="flex gap-5">
-            <p class="font-display text-3xl leading-none text-navy-500">
-              {step.number}
-            </p>
+          <div class="flex gap-6">
+            <p class="display w-10 shrink-0 text-2xl text-accent">{step.number}</p>
             <div>
-              <h3 class="text-xl font-medium">{step.title}</h3>
+              <h3 class="display text-xl">{step.title}</h3>
               <p class="mt-2.5 text-body">{step.body}</p>
             </div>
           </div>
@@ -132,49 +148,24 @@ const steps = [
     </div>
   </section>
 
-  <!-- Buy box -->
-  <section class="wrap py-14 md:py-20">
-    <div class="rounded-3xl bg-navy px-6 py-12 text-paper md:px-12 md:py-16">
-      <p class="eyebrow !text-[#8fb0d4]">Our buy box</p>
-      <h2 class="display mt-5 max-w-2xl text-3xl text-paper md:text-4xl">
-        Exactly what we are looking for.
-      </h2>
-      <p class="mt-5 max-w-2xl text-[#c4d2e2]">
-        Published so brokers and owners can qualify us in or out in a few
-        seconds instead of a few emails.
-      </p>
-
-      <dl class="mt-12 grid gap-10 sm:grid-cols-2">
-        {
-          BUY_BOX.map((item) => (
-            <div class="border-t border-white/15 pt-5">
-              <dt class="text-xs font-medium uppercase tracking-[0.18em] text-[#8fb0d4]">
-                {item.label}
-              </dt>
-              <dd class="mt-2 text-2xl font-medium text-paper">{item.value}</dd>
-              <dd class="mt-2 text-sm leading-relaxed text-[#a9b6c7]">
-                {item.note}
-              </dd>
-            </div>
-          ))
-        }
-      </dl>
-
-      <div class="mt-12 border-t border-white/15 pt-8">
-        <h3 class="text-xs font-medium uppercase tracking-[0.18em] text-[#8fb0d4]">
-          What we pass on
-        </h3>
-        <ul class="mt-4 grid gap-2.5 text-[#c4d2e2] md:grid-cols-3 md:gap-6">
+  <!-- What we pass on -->
+  <section class="wrap border-b border-line py-14 md:py-20">
+    <div class="grid gap-10 md:grid-cols-[0.8fr_1.2fr] md:gap-16">
+      <div>
+        <p class="eyebrow eyebrow-muted">What we pass on</p>
+        <h2 class="display mt-6 text-[clamp(1.75rem,2vw+1rem,2.25rem)]">
+          Being explicit saves us both a phone call.
+        </h2>
+      </div>
+      <div>
+        <ul class="schedule">
           {
             NOT_A_FIT.map((item) => (
-              <li class="flex gap-2.5">
-                <span aria-hidden="true" class="text-[#8fb0d4]">&mdash;</span>
-                <span>{item}</span>
-              </li>
+              <li class="py-4 text-[1.15rem] text-ink">{item}</li>
             ))
           }
         </ul>
-        <p class="mt-6 max-w-2xl text-sm text-[#a9b6c7]">
+        <p class="mt-6 text-body">
           Close but not exact? Send it anyway. The edges of a buy box are
           judgment calls, and we would rather look than guess.
         </p>
@@ -187,31 +178,31 @@ const steps = [
     <div class="grid gap-12 md:grid-cols-[0.85fr_1.15fr] md:gap-16">
       <div>
         <p class="eyebrow">Tell us about it</p>
-        <h2 class="display mt-6 text-3xl md:text-[2.5rem]">
+        <h2 class="display mt-6 text-[clamp(1.9rem,2.4vw+1rem,2.5rem)]">
           Start with the basics.
         </h2>
         <p class="mt-5 text-body">
-          Five fields and a couple of minutes. We read every submission
+          A few fields and a couple of minutes. We read every submission
           ourselves and reply either way, including when the answer is no.
         </p>
 
-        <dl class="mt-10 space-y-6">
-          <div class="border-t border-line-strong pt-4">
-            <dt class="text-xs font-medium uppercase tracking-[0.16em] text-muted">
+        <dl class="schedule mt-10">
+          <div class="py-4">
+            <dt class="ui text-xs font-medium uppercase tracking-[0.18em] text-muted">
               Prefer to call
             </dt>
-            <dd class="mt-1.5">
-              <a href={`tel:${SITE.phone}`} class="text-xl font-medium text-navy">
+            <dd class="mt-2">
+              <a href={`tel:${SITE.phone}`} class="text-2xl text-accent">
                 {SITE.phoneDisplay}
               </a>
             </dd>
           </div>
-          <div class="border-t border-line-strong pt-4">
-            <dt class="text-xs font-medium uppercase tracking-[0.16em] text-muted">
+          <div class="py-4">
+            <dt class="ui text-xs font-medium uppercase tracking-[0.18em] text-muted">
               Prefer email
             </dt>
-            <dd class="mt-1.5">
-              <a href={`mailto:${SITE.email}`} class="text-xl font-medium text-navy">
+            <dd class="mt-2">
+              <a href={`mailto:${SITE.email}`} class="text-2xl text-accent">
                 {SITE.email}
               </a>
             </dd>

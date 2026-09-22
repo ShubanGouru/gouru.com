@@ -1,16 +1,14 @@
 ---
 import { NAV, LEGAL_NAV, SITE } from "../consts";
 
-// Copyright year is resolved once at build time.
 const year = new Date().getFullYear();
 ---
 
-<footer class="mt-24 bg-navy text-paper md:mt-32">
+<footer class="mt-24 bg-ink text-paper md:mt-32">
   <div class="wrap py-14 md:py-20">
-    <div class="grid gap-12 md:grid-cols-[1.4fr_1fr_1fr] md:gap-8">
-      <!-- Brand -->
-      <div class="max-w-xs">
-        <div class="flex items-center gap-2.5">
+    <div class="grid gap-12 md:grid-cols-[1.5fr_1fr_1fr] md:gap-8">
+      <div class="max-w-sm">
+        <div class="flex items-center gap-3">
           <img
             src="/mark-light.png"
             alt=""
@@ -20,26 +18,27 @@ const year = new Date().getFullYear();
             loading="lazy"
             decoding="async"
           />
-          <span class="text-lg font-medium tracking-tight text-paper">{SITE.name}</span>
+          <span class="text-[1.65rem] leading-none tracking-[0.02em] text-paper">
+            {SITE.name}
+          </span>
         </div>
-        <p class="mt-4 text-sm leading-relaxed text-[#a9b6c7]">
+        <p class="mt-5 leading-relaxed text-[#b3a996]">
           {SITE.brandName} buys, improves, and operates small multifamily
-          properties across the United States.
+          properties. Our current focus is North Carolina.
         </p>
       </div>
 
-      <!-- Sitemap -->
       <nav aria-label="Footer">
-        <h2 class="text-xs font-medium uppercase tracking-[0.18em] text-[#8497ad]">
+        <h2 class="ui text-xs font-medium uppercase tracking-[0.2em] text-[#8c826f]">
           Company
         </h2>
-        <ul class="mt-4 space-y-2.5 text-sm">
+        <ul class="ui mt-5 space-y-3 text-sm">
           {
             NAV.map((item) => (
               <li>
                 <a
                   href={item.href}
-                  class="text-[#cdd7e3] transition-colors hover:text-paper"
+                  class="text-[#ddd4c2] transition-colors hover:text-paper"
                 >
                   {item.label}
                 </a>
@@ -49,28 +48,15 @@ const year = new Date().getFullYear();
         </ul>
       </nav>
 
-      <!-- Legal + contact -->
       <div>
-        <h2 class="text-xs font-medium uppercase tracking-[0.18em] text-[#8497ad]">
-          Legal
+        <h2 class="ui text-xs font-medium uppercase tracking-[0.2em] text-[#8c826f]">
+          Reach us
         </h2>
-        <ul class="mt-4 space-y-2.5 text-sm">
-          {
-            LEGAL_NAV.map((item) => (
-              <li>
-                <a
-                  href={item.href}
-                  class="text-[#cdd7e3] transition-colors hover:text-paper"
-                >
-                  {item.label}
-                </a>
-              </li>
-            ))
-          }
+        <ul class="ui mt-5 space-y-3 text-sm">
           <li>
             <a
               href={`mailto:${SITE.email}`}
-              class="text-[#cdd7e3] transition-colors hover:text-paper"
+              class="text-[#ddd4c2] transition-colors hover:text-paper"
             >
               {SITE.email}
             </a>
@@ -78,11 +64,23 @@ const year = new Date().getFullYear();
           <li>
             <a
               href={`tel:${SITE.phone}`}
-              class="text-[#cdd7e3] transition-colors hover:text-paper"
+              class="text-[#ddd4c2] transition-colors hover:text-paper"
             >
               {SITE.phoneDisplay}
             </a>
           </li>
+          {
+            LEGAL_NAV.map((item) => (
+              <li>
+                <a
+                  href={item.href}
+                  class="text-[#8c826f] transition-colors hover:text-paper"
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))
+          }
         </ul>
       </div>
     </div>
@@ -90,19 +88,10 @@ const year = new Date().getFullYear();
     <hr class="my-10 border-0 border-t border-white/10" />
 
     <div
-      class="flex flex-col gap-3 text-sm text-[#9aa8bb] sm:flex-row sm:items-center sm:justify-between"
+      class="ui flex flex-col gap-3 text-sm text-[#8c826f] sm:flex-row sm:items-center sm:justify-between"
     >
       <p>&copy; {year} {SITE.legalName}. All rights reserved.</p>
-      <p class="flex items-center gap-4">
-        <a
-          href={`mailto:${SITE.email}`}
-          class="transition-colors hover:text-paper"
-        >
-          {SITE.email}
-        </a>
-        <span aria-hidden="true" class="text-white/20">/</span>
-        <span>{SITE.domain}</span>
-      </p>
+      <p>{SITE.domain}</p>
     </div>
   </div>
 </footer>

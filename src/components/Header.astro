@@ -1,7 +1,6 @@
 ---
 import { NAV, SITE } from "../consts";
 
-// Normalize the current path so "/sell/" matches the nav href "/sell/".
 const path = Astro.url.pathname;
 const isActive = (href: string) =>
   href === "/" ? path === "/" : path.startsWith(href);
@@ -10,11 +9,11 @@ const isActive = (href: string) =>
 const links = NAV.filter((item) => item.href !== "/");
 ---
 
-<header class="border-b border-line">
-  <div class="wrap flex items-center justify-between gap-4 py-4 md:py-5">
+<header class="border-b-2 border-ink">
+  <div class="wrap flex items-center justify-between gap-4 py-5 md:py-6">
     <a
       href="/"
-      class="flex items-center gap-2.5"
+      class="flex items-center gap-3"
       aria-label={`${SITE.brandName} — home`}
     >
       <img
@@ -26,14 +25,14 @@ const links = NAV.filter((item) => item.href !== "/");
         loading="eager"
         decoding="async"
       />
-      <span class="text-lg font-medium tracking-tight text-navy">
+      <span class="text-[1.65rem] leading-none tracking-[0.02em] text-ink">
         {SITE.name}
       </span>
     </a>
 
-    <div class="flex items-center gap-6">
+    <div class="flex items-center gap-8">
       <nav class="hidden md:block" aria-label="Primary">
-        <ul class="flex items-center gap-5 text-sm lg:gap-7">
+        <ul class="ui flex items-center gap-6 text-sm lg:gap-8">
           {
             links.map((item) => (
               <li>
@@ -41,8 +40,8 @@ const links = NAV.filter((item) => item.href !== "/");
                   href={item.href}
                   aria-current={isActive(item.href) ? "page" : undefined}
                   class:list={[
-                    "inline-block py-1 transition-colors hover:text-navy",
-                    isActive(item.href) ? "text-navy" : "text-body",
+                    "inline-block py-1 transition-colors hover:text-accent",
+                    isActive(item.href) ? "text-ink" : "text-body",
                   ]}
                 >
                   {item.label}
@@ -53,17 +52,17 @@ const links = NAV.filter((item) => item.href !== "/");
         </ul>
       </nav>
 
-      {/* Sellers often want to call rather than type. Shown where there is room. */}
+      {/* Sellers reach for the phone before the form. */}
       <a
         href={`tel:${SITE.phone}`}
-        class="hidden text-sm font-medium text-navy lg:inline-block"
+        class="ui hidden border-b-2 border-accent pb-0.5 text-sm font-medium text-ink lg:inline-block"
       >
         {SITE.phoneDisplay}
       </a>
 
       <button
         type="button"
-        class="-mr-2 inline-flex items-center justify-center p-2 text-navy md:hidden"
+        class="-mr-2 inline-flex items-center justify-center p-2 text-ink md:hidden"
         data-menu-toggle
         aria-expanded="false"
         aria-controls="mobile-nav"
@@ -74,7 +73,7 @@ const links = NAV.filter((item) => item.href !== "/");
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
-          stroke-width="1.6"
+          stroke-width="1.5"
           stroke-linecap="round"
           aria-hidden="true"
         >
@@ -85,7 +84,7 @@ const links = NAV.filter((item) => item.href !== "/");
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
-          stroke-width="1.6"
+          stroke-width="1.5"
           stroke-linecap="round"
           aria-hidden="true"
         >
@@ -101,7 +100,7 @@ const links = NAV.filter((item) => item.href !== "/");
     aria-label="Primary"
     hidden
   >
-    <ul class="wrap flex flex-col py-2">
+    <ul class="wrap ui flex flex-col py-2">
       {
         links.map((item) => (
           <li>
@@ -109,8 +108,8 @@ const links = NAV.filter((item) => item.href !== "/");
               href={item.href}
               aria-current={isActive(item.href) ? "page" : undefined}
               class:list={[
-                "block border-b border-line py-3.5 text-base transition-colors hover:text-navy",
-                isActive(item.href) ? "text-navy" : "text-body",
+                "block border-b border-line py-3.5 text-base transition-colors hover:text-accent",
+                isActive(item.href) ? "text-ink" : "text-body",
               ]}
             >
               {item.label}
@@ -121,7 +120,7 @@ const links = NAV.filter((item) => item.href !== "/");
       <li>
         <a
           href={`tel:${SITE.phone}`}
-          class="block py-3.5 text-base font-medium text-navy"
+          class="block py-3.5 text-base font-medium text-accent"
         >
           {SITE.phoneDisplay}
         </a>
@@ -133,8 +132,7 @@ const links = NAV.filter((item) => item.href !== "/");
 <style>
   /*
     The button's own aria-expanded state drives which icon shows, so the ARIA
-    attribute and the visual are guaranteed to agree — there is no second
-    class to forget to update.
+    attribute and the visual can never disagree.
   */
   [data-menu-toggle][aria-expanded="false"] .icon-close,
   [data-menu-toggle][aria-expanded="true"] .icon-open {
@@ -156,7 +154,6 @@ const links = NAV.filter((item) => item.href !== "/");
       setOpen(toggle.getAttribute("aria-expanded") !== "true");
     });
 
-    // Escape closes the menu and returns focus to the control that opened it.
     document.addEventListener("keydown", (event) => {
       if (event.key === "Escape" && !menu.hidden) {
         setOpen(false);
@@ -165,10 +162,10 @@ const links = NAV.filter((item) => item.href !== "/");
     });
 
     /*
-       Crossing into the desktop layout leaves the menu markup open behind a
-       CSS `display:none`. Reset it so returning to a narrow viewport does not
-       reveal a panel the visitor never opened.
-     */
+      Crossing into the desktop layout leaves the menu open behind a CSS
+      display:none. Reset it so returning to a narrow viewport does not reveal
+      a panel the visitor never opened.
+    */
     const desktop = window.matchMedia("(min-width: 768px)");
     desktop.addEventListener("change", (event) => {
       if (event.matches) setOpen(false);
