@@ -1,6 +1,6 @@
 ---
 import Base from "../layouts/Base.astro";
-import CtaBand from "../components/CtaBand.astro";
+import StayInTouch from "../components/StayInTouch.astro";
 import { SITE, MARKETS } from "../consts";
 
 /**
@@ -125,8 +125,11 @@ const steps = [
     </ul>
   </section>
 
-  <CtaBand
-    heading="Have a property, or want to see deals?"
-    body="Tell us which one and we will take it from there. Most conversations start with a five-minute call."
-  />
+  {/*
+    This replaces the old "get in touch" band. Home already routes people to
+    /sell/ and /invest/ four times above this point; a fifth identical ask adds
+    nothing, whereas "keep me posted" catches the visitor who is not ready to
+    act today and would otherwise leave with nothing exchanged.
+  */}
+  <StayInTouch />
 </Base>

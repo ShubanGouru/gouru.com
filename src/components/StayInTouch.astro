@@ -1,0 +1,113 @@
+---
+import FormShell from "./form/FormShell.astro";
+import Field from "./form/Field.astro";
+import Select from "./form/Select.astro";
+import { SITE } from "../consts";
+
+/**
+ * Mailing-list capture.
+ *
+ * Two things here are deliberate and worth not "simplifying" later:
+ *
+ * 1. First and last name are SEPARATE fields, unlike every other form on the
+ *    site, which asks for one "Name". A mailing list needs a first name on its
+ *    own so a greeting reads "Hi Shuban" rather than "Hi Shuban Gouru".
+ *    Splitting names after the fact means parsing, which breaks on hyphenated
+ *    surnames, particles like "van der", and anything entered out of order.
+ *
+ * 2. Role is required. It is the one field that lets the list be segmented, and
+ *    segmentation is not cosmetic here: sending investment content to an
+ *    unsegmented public list is the kind of thing that starts to look like
+ *    general solicitation. Owners and brokers should be reachable without that
+ *    content going to people who have not been qualified.
+ *
+ * The copy promises "occasional updates" and no schedule on purpose. A stated
+ * cadence is a commitment, and a visibly abandoned newsletter says more than no
+ * newsletter at all.
+ */
+---
+
+<section class="wrap">
+  <div class="border border-line bg-paper-deep px-6 py-12 md:px-12 md:py-16">
+    <div class="grid gap-10 md:grid-cols-[0.9fr_1.1fr] md:gap-16">
+      <div>
+        <p class="eyebrow">Stay in touch</p>
+        <h2 class="display mt-5 text-[clamp(1.9rem,2.6vw+1rem,2.75rem)]">
+          Hear from us <em>now and then.</em>
+        </h2>
+        <p class="mt-5 max-w-md text-body">
+          We send occasional updates: what we are buying, what we are seeing in
+          our markets, and the odd opportunity. No fixed schedule, and we will
+          take you off the list the moment you ask.
+        </p>
+        <p class="mt-5 max-w-md text-body">
+          If you would rather just talk, email
+          <a href={`mailto:${SITE.email}`} class="link">{SITE.email}</a> or call
+          <a href={`tel:${SITE.phone}`} class="link">{SITE.phoneDisplay}</a>.
+        </p>
+      </div>
+
+      <div>
+        <FormShell
+          subject="New mailing list signup — gouru.com"
+          submitLabel="Keep me posted"
+          successMessage="You're on the list. We'll be in touch when we have something worth sending."
+        >
+          <div class="grid gap-5 sm:grid-cols-2">
+            <Field
+              label="First name"
+              name="first_name"
+              required
+              autocomplete="given-name"
+            />
+            <Field
+              label="Last name"
+              name="last_name"
+              required
+              autocomplete="family-name"
+            />
+          </div>
+
+          <div class="grid gap-5 sm:grid-cols-2">
+            <Field
+              label="Email"
+              name="email"
+              type="email"
+              required
+              autocomplete="email"
+            />
+            <Field
+              label="Phone"
+              name="phone"
+              type="tel"
+              autocomplete="tel"
+              hint="Optional."
+            />
+          </div>
+
+          <Select
+            label="Which best describes you?"
+            name="role"
+            required
+            placeholder="Select one"
+            options={[
+              "Property owner",
+              "Broker or agent",
+              "Investor",
+              "Lender",
+              "Service provider",
+              "Other",
+            ]}
+            hint="So we send you things that are actually relevant."
+          />
+
+          <p class="ui text-xs leading-relaxed text-muted">
+            By signing up you agree that we may email you occasional updates. We
+            never sell or share your details. See our
+            <a href="/privacy/" class="link">Privacy Policy</a>.
+          </p>
+        </FormShell>
+      </div>
+    </div>
+  </div>
+</section>
