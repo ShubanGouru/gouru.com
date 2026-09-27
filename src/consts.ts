@@ -68,7 +68,7 @@ export const SITE = {
   ogVersion: "4",
 
   /** Date the legal pages were last reviewed. */
-  legalUpdated: "September 21, 2026",
+  legalUpdated: "September 27, 2026",
 } as const;
 
 /** Primary navigation, shared by the header and footer. */
